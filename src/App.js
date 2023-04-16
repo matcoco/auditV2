@@ -1,24 +1,29 @@
-import logo from './logo.svg';
+import React from 'react';
 import './App.css';
 
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import HomePage from "./components/pages/HomePage";
+import GBookPage from "./components/pages/GBookPage";
+import SettingsPage from "./components/pages/SettingsPage";
+import FormsPage from "./components/pages/FormsPage";
+import NavGlobal from "./components/NavGlobal";
+
 function App() {
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <NavGlobal />
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/:gbook" element={<GBookPage />} />
+        <Route path="/settings/*" element={<SettingsPage />} />
+        <Route path="/settings/forms" element={<FormsPage />} />
+        <Route path="/settings/auditeurs" component={SettingsPage} />
+        <Route path="/settings/demandeurs" component={SettingsPage} />
+        <Route path="/settings/champsFormulaire" component={<FormsPage />} />
+        <Route path="/settings/categoriesFormulaire" component={<FormsPage />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
