@@ -2,336 +2,21 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 
+
+
 const initialState = {
     hardwareData: [{
         "auditeur": [
-            "Samir M.",
-            "Mathieu G.",
-            "Franck P."
+
         ],
         "demandeur": [
-            "Djamel S.",
-            "Pascal C.",
-            "Lauris M."
+
         ],
         "valueStatusMenu": 0,
         "datas": [],
         "forms": {
-            "prod": [
-                {
-                    "label": "Aspect visuel",
-                    "name": "aspVisuel",
-                    "type": "select",
-                    "options": [
-                        "",
-                        "OK",
-                        "NOK",
-                        "INDISPONIBLE",
-                        "MANQUANT",
-                        "NON VENDABLE",
-                        "A DEMANTELER",
-                        "VENDABLE",
-                        "NON ELIGIBLE E-COM",
-                        "ELIGIBLE E-COM"
-                    ],
-                    "id": "lg5g9sod"
-                },
-                {
-                    "label": "batterie présente ?",
-                    "name": "batPresente",
-                    "type": "select",
-                    "options": [
-                        "",
-                        "OK",
-                        "NOK",
-                        "INDISPONIBLE",
-                        "MANQUANT",
-                        "NON VENDABLE",
-                        "A DEMANTELER",
-                        "VENDABLE",
-                        "NON ELIGIBLE E-COM",
-                        "ELIGIBLE E-COM"
-                    ],
-                    "id": "lg5g9sof"
-                },
-                {
-                    "label": "Etat actuel",
-                    "name": "etatActu",
-                    "type": "select",
-                    "options": [
-                        "",
-                        "OK",
-                        "NOK",
-                        "INDISPONIBLE",
-                        "MANQUANT",
-                        "NON VENDABLE",
-                        "A DEMANTELER",
-                        "VENDABLE",
-                        "NON ELIGIBLE E-COM",
-                        "ELIGIBLE E-COM"
-                    ],
-                    "id": "lg5g9sow"
-                },
-                {
-                    "label": "Commentaire du service",
-                    "name": "commentServ",
-                    "type": "text",
-                    "id": "lg5g9sox"
-                }
-            ],
-            "ecom": [],
-            "audit écran": [
-                {
-                    "label": "Aspect visuel",
-                    "name": "aspVisuel",
-                    "type": "select",
-                    "options": [
-                        "",
-                        "OK",
-                        "NOK",
-                        "INDISPONIBLE",
-                        "MANQUANT",
-                        "NON VENDABLE",
-                        "A DEMANTELER",
-                        "VENDABLE",
-                        "NON ELIGIBLE E-COM",
-                        "ELIGIBLE E-COM"
-                    ],
-                    "id": "lg5g9sod"
-                },
-                {
-                    "label": "Rayures écran",
-                    "name": "rayEcran",
-                    "type": "select",
-                    "options": [
-                        "",
-                        "OK",
-                        "NOK",
-                        "INDISPONIBLE",
-                        "MANQUANT",
-                        "NON VENDABLE",
-                        "A DEMANTELER",
-                        "VENDABLE",
-                        "NON ELIGIBLE E-COM",
-                        "ELIGIBLE E-COM"
-                    ],
-                    "id": "lg5g9soe"
-                },
-                {
-                    "label": "Etat actuel",
-                    "name": "etatActu",
-                    "type": "select",
-                    "options": [
-                        "",
-                        "OK",
-                        "NOK",
-                        "INDISPONIBLE",
-                        "MANQUANT",
-                        "NON VENDABLE",
-                        "A DEMANTELER",
-                        "VENDABLE",
-                        "NON ELIGIBLE E-COM",
-                        "ELIGIBLE E-COM"
-                    ],
-                    "id": "lg5g9sow"
-                },
-                {
-                    "label": "Nettoyage du produit ?",
-                    "name": "netProduit",
-                    "type": "select",
-                    "options": [
-                        "",
-                        "OK",
-                        "NOK",
-                        "INDISPONIBLE",
-                        "MANQUANT",
-                        "NON VENDABLE",
-                        "A DEMANTELER",
-                        "VENDABLE",
-                        "NON ELIGIBLE E-COM",
-                        "ELIGIBLE E-COM"
-                    ],
-                    "id": "lg5g9sou"
-                },
-                {
-                    "label": "Commentaire du service",
-                    "name": "commentServ",
-                    "type": "text",
-                    "id": "lg5g9sox"
-                }
-            ],
-            "préparation": [
-                {
-                    "label": "Aspect visuel",
-                    "name": "aspVisuel",
-                    "type": "select",
-                    "options": [
-                        "",
-                        "OK",
-                        "NOK",
-                        "INDISPONIBLE",
-                        "MANQUANT",
-                        "NON VENDABLE",
-                        "A DEMANTELER",
-                        "VENDABLE",
-                        "NON ELIGIBLE E-COM",
-                        "ELIGIBLE E-COM"
-                    ],
-                    "id": "lg5g9sod"
-                },
-                {
-                    "label": "Rayures écran",
-                    "name": "rayEcran",
-                    "type": "select",
-                    "options": [
-                        "",
-                        "OK",
-                        "NOK",
-                        "INDISPONIBLE",
-                        "MANQUANT",
-                        "NON VENDABLE",
-                        "A DEMANTELER",
-                        "VENDABLE",
-                        "NON ELIGIBLE E-COM",
-                        "ELIGIBLE E-COM"
-                    ],
-                    "id": "lg5g9soe"
-                },
-                {
-                    "label": "batterie présente ?",
-                    "name": "batPresente",
-                    "type": "select",
-                    "options": [
-                        "",
-                        "OK",
-                        "NOK",
-                        "INDISPONIBLE",
-                        "MANQUANT",
-                        "NON VENDABLE",
-                        "A DEMANTELER",
-                        "VENDABLE",
-                        "NON ELIGIBLE E-COM",
-                        "ELIGIBLE E-COM"
-                    ],
-                    "id": "lg5g9sof"
-                },
-                {
-                    "label": "Esthétique batterie",
-                    "name": "estheBatt",
-                    "type": "select",
-                    "options": [
-                        "",
-                        "OK",
-                        "NOK",
-                        "INDISPONIBLE",
-                        "MANQUANT",
-                        "NON VENDABLE",
-                        "A DEMANTELER",
-                        "VENDABLE",
-                        "NON ELIGIBLE E-COM",
-                        "ELIGIBLE E-COM"
-                    ],
-                    "id": "lg5g9sog"
-                },
-                {
-                    "label": "Numéro de série batterie",
-                    "name": "numSerieBatt",
-                    "type": "text",
-                    "id": "lg5g9soh"
-                },
-                {
-                    "label": "Numéro de série BIOS",
-                    "name": "numSerieBios",
-                    "type": "text",
-                    "id": "lg5g9soi"
-                },
-                {
-                    "label": "Mot de passe Bios ?",
-                    "name": "mdpBios",
-                    "type": "select",
-                    "options": [
-                        "",
-                        "OK",
-                        "NOK",
-                        "INDISPONIBLE",
-                        "MANQUANT",
-                        "NON VENDABLE",
-                        "A DEMANTELER",
-                        "VENDABLE",
-                        "NON ELIGIBLE E-COM",
-                        "ELIGIBLE E-COM"
-                    ],
-                    "id": "lg5g9soj"
-                },
-                {
-                    "label": "Reset Bios ?",
-                    "name": "resetBios",
-                    "type": "select",
-                    "options": [
-                        "",
-                        "OK",
-                        "NOK",
-                        "INDISPONIBLE",
-                        "MANQUANT",
-                        "NON VENDABLE",
-                        "A DEMANTELER",
-                        "VENDABLE",
-                        "NON ELIGIBLE E-COM",
-                        "ELIGIBLE E-COM"
-                    ],
-                    "id": "lg5g9sok"
-                },
-                {
-                    "name": "installWin",
-                    "label": "installation windows ",
-                    "type": "select",
-                    "id": "lg5hwnym",
-                    "options": [
-                        "",
-                        "OK",
-                        "NOK",
-                        "INDISPONIBLE",
-                        "MANQUANT",
-                        "NON VENDABLE",
-                        "A DEMANTELER",
-                        "VENDABLE",
-                        "NON ELIGIBLE E-COM",
-                        "ELIGIBLE E-COM"
-                    ]
-                },
-                {
-                    "name": "actCleWin",
-                    "label": "activation clé windows",
-                    "type": "text",
-                    "id": "lg5hx87a"
-                }
-            ]
         },
         "checkboxAudit": [
-            {
-                "label": "prod",
-                "name": "group1",
-                "type": "radio",
-                "id": "prod"
-            },
-            {
-                "label": "ecom",
-                "name": "group1",
-                "type": "radio",
-                "id": "ecom"
-            },
-            {
-                "label": "audit écran",
-                "name": "group1",
-                "type": "radio",
-                "id": "audit écran"
-            },
-            {
-                "label": "préparation",
-                "name": "group1",
-                "type": "radio",
-                "id": "préparation"
-            }
         ],
         "settings": {
             "select": {
@@ -349,372 +34,7 @@ const initialState = {
                 ]
             },
             "fieldsForms": [
-                {
-                    "label": "Aspect visuel",
-                    "name": "aspVisuel",
-                    "type": "select",
-                    "options": [
-                        "",
-                        "OK",
-                        "NOK",
-                        "INDISPONIBLE",
-                        "MANQUANT",
-                        "NON VENDABLE",
-                        "A DEMANTELER",
-                        "VENDABLE",
-                        "NON ELIGIBLE E-COM",
-                        "ELIGIBLE E-COM"
-                    ],
-                    "id": "lg5g9sod"
-                },
-                {
-                    "label": "Rayures écran",
-                    "name": "rayEcran",
-                    "type": "select",
-                    "options": [
-                        "",
-                        "OK",
-                        "NOK",
-                        "INDISPONIBLE",
-                        "MANQUANT",
-                        "NON VENDABLE",
-                        "A DEMANTELER",
-                        "VENDABLE",
-                        "NON ELIGIBLE E-COM",
-                        "ELIGIBLE E-COM"
-                    ],
-                    "id": "lg5g9soe"
-                },
-                {
-                    "label": "batterie présente ?",
-                    "name": "batPresente",
-                    "type": "select",
-                    "options": [
-                        "",
-                        "OK",
-                        "NOK",
-                        "INDISPONIBLE",
-                        "MANQUANT",
-                        "NON VENDABLE",
-                        "A DEMANTELER",
-                        "VENDABLE",
-                        "NON ELIGIBLE E-COM",
-                        "ELIGIBLE E-COM"
-                    ],
-                    "id": "lg5g9sof"
-                },
-                {
-                    "label": "Esthétique batterie",
-                    "name": "estheBatt",
-                    "type": "select",
-                    "options": [
-                        "",
-                        "OK",
-                        "NOK",
-                        "INDISPONIBLE",
-                        "MANQUANT",
-                        "NON VENDABLE",
-                        "A DEMANTELER",
-                        "VENDABLE",
-                        "NON ELIGIBLE E-COM",
-                        "ELIGIBLE E-COM"
-                    ],
-                    "id": "lg5g9sog"
-                },
-                {
-                    "label": "Numéro de série batterie",
-                    "name": "numSerieBatt",
-                    "type": "text",
-                    "id": "lg5g9soh"
-                },
-                {
-                    "label": "Numéro de série BIOS",
-                    "name": "numSerieBios",
-                    "type": "text",
-                    "id": "lg5g9soi"
-                },
-                {
-                    "label": "Mot de passe Bios ?",
-                    "name": "mdpBios",
-                    "type": "select",
-                    "options": [
-                        "",
-                        "OK",
-                        "NOK",
-                        "INDISPONIBLE",
-                        "MANQUANT",
-                        "NON VENDABLE",
-                        "A DEMANTELER",
-                        "VENDABLE",
-                        "NON ELIGIBLE E-COM",
-                        "ELIGIBLE E-COM"
-                    ],
-                    "id": "lg5g9soj"
-                },
-                {
-                    "label": "Reset Bios ?",
-                    "name": "resetBios",
-                    "type": "select",
-                    "options": [
-                        "",
-                        "OK",
-                        "NOK",
-                        "INDISPONIBLE",
-                        "MANQUANT",
-                        "NON VENDABLE",
-                        "A DEMANTELER",
-                        "VENDABLE",
-                        "NON ELIGIBLE E-COM",
-                        "ELIGIBLE E-COM"
-                    ],
-                    "id": "lg5g9sok"
-                },
-                {
-                    "label": "Selection UEFI ?",
-                    "name": "uefi",
-                    "type": "select",
-                    "options": [
-                        "",
-                        "OK",
-                        "NOK",
-                        "INDISPONIBLE",
-                        "MANQUANT",
-                        "NON VENDABLE",
-                        "A DEMANTELER",
-                        "VENDABLE",
-                        "NON ELIGIBLE E-COM",
-                        "ELIGIBLE E-COM"
-                    ],
-                    "id": "lg5g9sol"
-                },
-                {
-                    "label": "Partionnement du systeme de stockage ?",
-                    "name": "partHDD",
-                    "type": "select",
-                    "options": [
-                        "",
-                        "OK",
-                        "NOK",
-                        "INDISPONIBLE",
-                        "MANQUANT",
-                        "NON VENDABLE",
-                        "A DEMANTELER",
-                        "VENDABLE",
-                        "NON ELIGIBLE E-COM",
-                        "ELIGIBLE E-COM"
-                    ],
-                    "id": "lg5g9som"
-                },
-                {
-                    "label": "Fonctionnement caméra ?",
-                    "name": "camera",
-                    "type": "select",
-                    "options": [
-                        "",
-                        "OK",
-                        "NOK",
-                        "INDISPONIBLE",
-                        "MANQUANT",
-                        "NON VENDABLE",
-                        "A DEMANTELER",
-                        "VENDABLE",
-                        "NON ELIGIBLE E-COM",
-                        "ELIGIBLE E-COM"
-                    ],
-                    "id": "lg5g9son"
-                },
-                {
-                    "label": "Fonctionnement USB ?",
-                    "name": "usb",
-                    "type": "select",
-                    "options": [
-                        "",
-                        "OK",
-                        "NOK",
-                        "INDISPONIBLE",
-                        "MANQUANT",
-                        "NON VENDABLE",
-                        "A DEMANTELER",
-                        "VENDABLE",
-                        "NON ELIGIBLE E-COM",
-                        "ELIGIBLE E-COM"
-                    ],
-                    "id": "lg5g9soo"
-                },
-                {
-                    "label": "Fonctionnement audio ?",
-                    "name": "audio",
-                    "type": "select",
-                    "options": [
-                        "",
-                        "OK",
-                        "NOK",
-                        "INDISPONIBLE",
-                        "MANQUANT",
-                        "NON VENDABLE",
-                        "A DEMANTELER",
-                        "VENDABLE",
-                        "NON ELIGIBLE E-COM",
-                        "ELIGIBLE E-COM"
-                    ],
-                    "id": "lg5g9sop"
-                },
-                {
-                    "label": "Fonctionnement clavier ?",
-                    "name": "clavier",
-                    "type": "select",
-                    "options": [
-                        "",
-                        "OK",
-                        "NOK",
-                        "INDISPONIBLE",
-                        "MANQUANT",
-                        "NON VENDABLE",
-                        "A DEMANTELER",
-                        "VENDABLE",
-                        "NON ELIGIBLE E-COM",
-                        "ELIGIBLE E-COM"
-                    ],
-                    "id": "lg5g9soq"
-                },
-                {
-                    "label": "Fonctionnement prise réseau ?",
-                    "name": "prise réseau",
-                    "type": "select",
-                    "options": [
-                        "",
-                        "OK",
-                        "NOK",
-                        "INDISPONIBLE",
-                        "MANQUANT",
-                        "NON VENDABLE",
-                        "A DEMANTELER",
-                        "VENDABLE",
-                        "NON ELIGIBLE E-COM",
-                        "ELIGIBLE E-COM"
-                    ],
-                    "id": "lg5g9sor"
-                },
-                {
-                    "label": "Fonctionnement touchpad ?",
-                    "name": "touchpad",
-                    "type": "select",
-                    "options": [
-                        "",
-                        "OK",
-                        "NOK",
-                        "INDISPONIBLE",
-                        "MANQUANT",
-                        "NON VENDABLE",
-                        "A DEMANTELER",
-                        "VENDABLE",
-                        "NON ELIGIBLE E-COM",
-                        "ELIGIBLE E-COM"
-                    ],
-                    "id": "lg5g9sos"
-                },
-                {
-                    "label": "Fonctionnement ecran",
-                    "name": "ecran",
-                    "type": "select",
-                    "options": [
-                        "",
-                        "OK",
-                        "NOK",
-                        "INDISPONIBLE",
-                        "MANQUANT",
-                        "NON VENDABLE",
-                        "A DEMANTELER",
-                        "VENDABLE",
-                        "NON ELIGIBLE E-COM",
-                        "ELIGIBLE E-COM"
-                    ],
-                    "id": "lg5g9sot"
-                },
-                {
-                    "label": "Nettoyage du produit ?",
-                    "name": "netProduit",
-                    "type": "select",
-                    "options": [
-                        "",
-                        "OK",
-                        "NOK",
-                        "INDISPONIBLE",
-                        "MANQUANT",
-                        "NON VENDABLE",
-                        "A DEMANTELER",
-                        "VENDABLE",
-                        "NON ELIGIBLE E-COM",
-                        "ELIGIBLE E-COM"
-                    ],
-                    "id": "lg5g9sou"
-                },
-                {
-                    "label": "Vérification chargeur",
-                    "name": "verifChargeur",
-                    "type": "select",
-                    "options": [
-                        "",
-                        "OK",
-                        "NOK",
-                        "INDISPONIBLE",
-                        "MANQUANT",
-                        "NON VENDABLE",
-                        "A DEMANTELER",
-                        "VENDABLE",
-                        "NON ELIGIBLE E-COM",
-                        "ELIGIBLE E-COM"
-                    ],
-                    "id": "lg5g9sov"
-                },
-                {
-                    "label": "Etat actuel",
-                    "name": "etatActu",
-                    "type": "select",
-                    "options": [
-                        "",
-                        "OK",
-                        "NOK",
-                        "INDISPONIBLE",
-                        "MANQUANT",
-                        "NON VENDABLE",
-                        "A DEMANTELER",
-                        "VENDABLE",
-                        "NON ELIGIBLE E-COM",
-                        "ELIGIBLE E-COM"
-                    ],
-                    "id": "lg5g9sow"
-                },
-                {
-                    "label": "Commentaire du service",
-                    "name": "commentServ",
-                    "type": "text",
-                    "id": "lg5g9sox"
-                },
-                {
-                    "name": "installWin",
-                    "label": "installation windows ",
-                    "type": "select",
-                    "id": "lg5hwnym",
-                    "options": [
-                        "",
-                        "OK",
-                        "NOK",
-                        "INDISPONIBLE",
-                        "MANQUANT",
-                        "NON VENDABLE",
-                        "A DEMANTELER",
-                        "VENDABLE",
-                        "NON ELIGIBLE E-COM",
-                        "ELIGIBLE E-COM"
-                    ]
-                },
-                {
-                    "name": "actCleWin",
-                    "label": "activation clé windows",
-                    "type": "text",
-                    "id": "lg5hx87a"
-                }
+
             ],
             "formCategorySelected": "prod",
             "natureDemande": {
@@ -758,10 +78,12 @@ export const findIndexDatas = (datas, property, value) => {
 export const calculatePercentage = (audit, auditOrigin) => {
     const totalElements = Object.keys(auditOrigin).length;
     const filledElements = Object.values(audit).filter((value) => value !== '' && value !== null).length;
-  
+
     return (filledElements / totalElements) * 100;
-  };
-  
+};
+
+
+
 
 
 export const hardwareSlice = createSlice({
@@ -773,7 +95,9 @@ export const hardwareSlice = createSlice({
             state.error = null;
         },
         fetchDataSuccess: (state, action) => {
-            state.hardwareData = action.payload;
+            let hardwareData = []
+            hardwareData.push(action.payload)
+            state.hardwareData = hardwareData
             state.loading = false;
             state.error = null;
         },
@@ -790,7 +114,12 @@ export const hardwareSlice = createSlice({
             );
 
             if (index >= 0) {
-                state.hardwareData[0].datas[index] = { ...action.payload };
+                let lastObj = { ...state.hardwareData[0].datas[index] }
+                lastObj.gbook = action.payload.gbook
+                lastObj.date = action.payload.date
+                lastObj.auditor = action.payload.auditor
+                lastObj.requester = action.payload.requester
+                state.hardwareData[0].datas[index] = lastObj;
             }
         },
         deleteAudit: (state, action) => {
@@ -854,9 +183,20 @@ export const hardwareSlice = createSlice({
         updateSelectedData: (state, action) => {
             const { obj } = action.payload;
             const index = state.hardwareData[0].datas.findIndex(item => item.id === obj.id);
-            state.hardwareData[0].datas[index] = obj ;
+            state.hardwareData[0].datas[index] = obj;
         },
-
+        updateFieldsForms: (state, action) => {
+            state.hardwareData[0].settings.fieldsForms = action.payload
+        },
+        updateImportConfig: (state, action) => {
+            state.hardwareData[0] = action.payload
+        },
+        updateImportBDD: (state, action) => {
+            state.hardwareData[0].bdd = action.payload
+        },
+        resetDatas:(state,) => {
+            state.hardwareData[0].datas = []
+        }
     }
 });
 
@@ -880,7 +220,11 @@ export const {
     updateCategory,
     deleteCategory,
     addElementsToForm,
-    updateSelectedData
+    updateSelectedData,
+    updateFieldsForms,
+    updateImportConfig,
+    updateImportBDD,
+    resetDatas
 } = hardwareSlice.actions;
 export const selectHardwareData = (state) => state.hardware.hardwareData[0];
 export default hardwareSlice.reducer;

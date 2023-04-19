@@ -32,7 +32,7 @@ const EditAuditModal = ({ show, onHide, data }) => {
         }
     }, [data]);
 
-    const handleSubmit = async () => {
+    const handleSubmit = () => {
         const updatedData = {
             date: date.toISOString(),
             auditor,
@@ -41,6 +41,8 @@ const EditAuditModal = ({ show, onHide, data }) => {
             lastedGbook: data.gbook,
             index: findIndexDatas(hardwareData.datas, data.gbook, data.gbook)
         };
+
+        console.log(updatedData)
 
 
         if (isUnique(gbook, hardwareData.datas, updatedData.lastedGbook, "gbook")) {

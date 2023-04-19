@@ -2,7 +2,6 @@ import React from 'react';
 import { ProgressBar } from 'react-bootstrap';
 
 const ProgressBarComponent = ({ data = {} }) => {
-  console.log(data);
   const { progress = 0, variant = 'primary' } = data;
 
   return (
@@ -10,4 +9,4 @@ const ProgressBarComponent = ({ data = {} }) => {
   );
 };
 
-export default ProgressBarComponent;
+export default React.memo(ProgressBarComponent);

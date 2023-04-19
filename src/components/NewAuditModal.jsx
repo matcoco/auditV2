@@ -10,7 +10,7 @@ import { addNewAudit } from "../store/hardwareSlice";
 import { toast } from 'react-toastify';
 import { useSelector } from "react-redux";
 import { selectHardwareData } from "../store/hardwareSlice";
-import * as moment from 'moment'
+/* import * as moment from 'moment' */
 import uniqid from 'uniqid';
 
 registerLocale("fr", fr);
@@ -35,6 +35,15 @@ const NewAuditModal = () => {
         return !hardwareData.datas.some((data) => data.gbook === gbookValue);
     };
 
+    const isDataValid = (hardwareData) => {
+        return (
+          hardwareData?.auditeur.length > 0 &&
+          hardwareData?.demandeur.length > 0 &&
+          hardwareData?.settings.fieldsForms.length > 0 &&
+          hardwareData?.checkboxAudit.length > 0
+        );
+      }
+
 
     const handleSubmit = () => {
         if (!date || !auditor || !requester || !gbook || !categoryAudit) {
@@ -56,7 +65,7 @@ const NewAuditModal = () => {
             category: categoryAudit,
             progress: 0,
             status: 1,
-            dateDebutAudit: moment().format('DD/MM/YYYY'),
+            dateDebutAudit: new Date().toISOString(),
             dateFinAudit: "",
         };
 
@@ -65,11 +74,15 @@ const NewAuditModal = () => {
         toast.success("produit ajouté!", { closeOnClick: true, autoClose: 2000, })
     };
 
+    const handleKeyDown = (event) => {
+        if (event.key === 'Enter') {
+          event.preventDefault();
+        }
+      };
+   
     return (
         <>
-            <Button variant="primary" onClick={handleShow}>
-                Ouvrir la modale
-            </Button>
+            <Button disabled={!isDataValid(hardwareData)} variant="primary" onClick={handleShow}>Nouvel audit</Button>
 
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
@@ -124,6 +137,7 @@ const NewAuditModal = () => {
                                     type="number"
                                     value={gbook}
                                     onChange={(e) => setGbook(e.target.value)}
+                                    onKeyDown={handleKeyDown}
                                 />
                             </InputGroup>
                         </Form.Group>

@@ -42,13 +42,14 @@ const SettingsFormsCategory = ({ show, name }) => {
 
     useEffect(() => {
         setFieldsForms(hardwareData.settings.fieldsForms)
-    }, [hardwareData])
+        setAddedElements(hardwareData?.forms[name])
+    }, [hardwareData, name])
 
     return (
         <div style={{ marginTop: '50px' }}>
             <ToastContainer />
             <h2>Formulaire {name}</h2>
-            <div style={{ display: 'flex', flexDirection: 'column', height: '100%', overflowY: 'scroll' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', height: '200px', overflowY: 'scroll' }}>
                 <Table striped bordered hover>
                     <thead>
                         <tr>
@@ -72,7 +73,7 @@ const SettingsFormsCategory = ({ show, name }) => {
                     </tbody>
                 </Table>
             </div>
-            <div style={{ display: 'flex', flexDirection: 'column', height: '100%', overflowY: 'scroll' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', height: '300px', overflowY: 'scroll' }}>
                 <Table striped bordered hover>
                     <thead>
                         <tr>

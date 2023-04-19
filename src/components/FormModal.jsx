@@ -48,6 +48,7 @@ const FormModal = ({ show, onHide, data, isEdit, isAdd }) => {
       onHide();
     } else if (isAdd && isUniqueName) {
       // Ajouter le champ de formulaire
+      console.log(fieldData)
       dispatch(addFieldForm(fieldData));
       toast.success('Champs de formulaire ajouté !');
       // Fermer la modal

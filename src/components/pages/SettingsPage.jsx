@@ -7,6 +7,8 @@ import ManageCategoriesForms from '../ManageCategoriesForms';
 
 import { Route, Routes } from "react-router-dom";
 import FormsPage from "./FormsPage";
+import ImportConfig from "./ImportConfig";
+import ImportBDD from "./ImportBDD";
 
 const SettingsPage = () => {
   const [activeComponent, setActiveComponent] = useState(null);
@@ -36,8 +38,8 @@ const SettingsPage = () => {
             <ListGroup.Item onClick={() => handleMenuItemClick("categoriesFormulaire")}>
               Gestionnaire des formulaires et catégorie
             </ListGroup.Item>
-            <ListGroup.Item action>Importation BDD</ListGroup.Item>
-            <ListGroup.Item action>Autre lien ou bouton</ListGroup.Item>
+            <ListGroup.Item onClick={() => handleMenuItemClick("ImportBDD")}>Importation BDD</ListGroup.Item>
+            <ListGroup.Item onClick={() => handleMenuItemClick("ImportConfiguration")}>Importation de la configuration</ListGroup.Item>
           </ListGroup>
         </Col>
         <Col md={9}>
@@ -46,6 +48,8 @@ const SettingsPage = () => {
             {activeComponent === "demandeurs" && <ManageRequesters />}
             {activeComponent === "champsFormulaire" && <FormsPage />}
             {activeComponent === "categoriesFormulaire" && <ManageCategoriesForms />}
+            {activeComponent === "ImportConfiguration" && <ImportConfig />}
+            {activeComponent === "ImportBDD" && <ImportBDD />}
             {/* Ajoutez ici d'autres conditions pour les autres liens du menu */}
           </Col>
           <Routes>
@@ -53,6 +57,8 @@ const SettingsPage = () => {
             <Route path="demandeurs" element={<ManageRequesters />} />
             <Route path="champsFormulaire" element={<FormsPage />} />
             <Route path="categoriesFormulaire" element={<ManageCategoriesForms/>} />
+            <Route path="ImportConfiguration" element={<ImportConfig />} />
+            <Route path="ImportBDD" element={<ImportBDD />} />
             {/* ... */}
           </Routes>
         </Col>

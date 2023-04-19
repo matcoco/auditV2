@@ -8,12 +8,15 @@ import store from './store/store';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
 
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <Provider store={store}>
-    <App />
-    <ToastContainer />
-  </Provider>
+ 
+    <Provider store={store}>
+      <App />
+      <ToastContainer />
+    </Provider>
+
 );
 
 // If you want to start measuring performance in your app, pass a function

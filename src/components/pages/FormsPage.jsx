@@ -8,7 +8,9 @@ import {
   addFieldForm,
   updateFieldForm,
   deleteFieldForm,
+  updateFieldsForms
 } from "../../store/hardwareSlice";
+import CSVImporter from "../CSVImporter";
 
 const FormsPage = () => {
   const [showModal, setShowModal] = useState(false);
@@ -48,42 +50,60 @@ const FormsPage = () => {
     }
   };
 
+  const handleImport = (importedData) => {
+    const updatedData = importedData.map((item) => {
+      if (item.type === "select") {
+        return {
+          ...item,
+          options: hardwareData.settings.select.options,
+        };
+      }
+      return item;
+    });
+  
+    dispatch(updateFieldsForms(updatedData));
+  };
+  
+
   return (
     <Container>
-      <Table striped bordered hover>
-        <thead>
-          <tr>
-            <th>Label</th>
-            <th>Name</th>
-            <th>Type</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {hardwareData.settings.fieldsForms.map((element, index) => (
-            <tr key={index}>
-              <td>{element.label}</td>
-              <td>{element.name}</td>
-              <td>{element.type === "text" ? "Champs de saisie" : "Menu déroulant"}</td>
-              <td>
-                <Button
-                  className="mr-2"
-                  variant="primary"
-                  onClick={() => handleEdit({ ...element, index })}
-                >
-                  Modifier
-                </Button>{" "}
-                <Button
-                  variant="danger"
-                  onClick={() => handleDelete(index)}
-                >
-                  Supprimer
-                </Button>
-              </td>
+      <div style={{ maxHeight: "500px", overflowY: "auto" }}>
+        <Table striped bordered hover>
+          <thead>
+            <tr>
+              <th>Label</th>
+              <th>Name</th>
+              <th>Type</th>
+              <th>Actions</th>
             </tr>
-          ))}
-        </tbody>
-      </Table>
+          </thead>
+          <tbody>
+            {hardwareData.settings.fieldsForms.map((element, index) => (
+              <tr key={index}>
+                <td>{element.label}</td>
+                <td>{element.name}</td>
+                <td>{element.type === "text" ? "Champs de saisie" : "Menu déroulant"}</td>
+                <td>
+                  <Button
+                    className="mr-2"
+                    variant="primary"
+                    onClick={() => handleEdit({ ...element, index })}
+                  >
+                    Modifier
+                  </Button>{" "}
+                  <Button
+                    variant="danger"
+                    onClick={() => handleDelete(index)}
+                  >
+                    Supprimer
+                  </Button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+      </div>
+
       <FormModal
         show={showModal}
         onHide={() => setShowModal(false)}
@@ -95,6 +115,8 @@ const FormsPage = () => {
       <Button variant="success" className="mb-4" onClick={handleAdd}>
         Ajouter
       </Button>
+
+      <CSVImporter onImport={handleImport} />
     </Container>
   );
 };

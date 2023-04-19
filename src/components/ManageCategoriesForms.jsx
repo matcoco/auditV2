@@ -27,6 +27,7 @@ const ManageCategoriesForms = () => {
     };
 
     const handleSubmit = () => {
+        setShowSettingsCategory(false)
         if (isEditing) {
             dispatch(updateCategory({ categoryName, lastedName }));
         } else {
@@ -51,13 +52,13 @@ const ManageCategoriesForms = () => {
     };
 
     const handleDelete = (name) => {
+        setShowSettingsCategory(false)
         dispatch(deleteCategory(name));
     };
 
     const handleEditForms = (name) => {
         setShowSettingsCategory(true)
         setCurrentSelectName(name)
-        //dispatch(deleteCategory(name));
     };
 
     return (
