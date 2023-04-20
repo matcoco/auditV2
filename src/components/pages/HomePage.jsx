@@ -137,7 +137,7 @@ const HomePage = () => {
       </div>
 
       <div>
-        <PieChart />
+        {hardwareData.datas.length > 0 ? <PieChart /> : ""}
       </div>
       <FormControl
         type="text"
