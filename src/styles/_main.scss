@@ -1,0 +1,12 @@
+// Utils
+@import "utils/variables";
+@import "utils/mixins";
+
+// Base
+@import "base/reset";
+@import "base/typography";
+
+// components
+@import "components/homepage";
+@import "components/statusCard";
+

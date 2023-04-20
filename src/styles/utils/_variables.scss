@@ -1,0 +1,17 @@
+// utils/_variables.scss
+
+// Couleurs pastel tendance
+$rose-pastel: #F8D7DA;
+$vert-pastel: #D1E7DD;
+$bleu-pastel: #CCE5FF;
+$jaune-pastel: #FFF3CD;
+$violet-pastel: #E2DFF7;
+
+// Thème pastel
+$theme-pastel: (
+    primary:$bleu-pastel,
+    secondary: $vert-pastel,
+    danger:$rose-pastel,
+    warning: $jaune-pastel,
+    info: $violet-pastel,
+);

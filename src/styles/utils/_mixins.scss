@@ -1,0 +1,11 @@
+// utils/_mixins.scss
+
+@mixin theme-pastel {
+    .theme-pastel {
+      --primary-color: map-get($theme-pastel, primary);
+      --secondary-color: map-get($theme-pastel, secondary);
+      --accent-color: map-get($theme-pastel, accent);
+      --background-color: map-get($theme-pastel, background);
+      --text-color: map-get($theme-pastel, text);
+    }
+  }

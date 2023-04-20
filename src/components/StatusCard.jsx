@@ -4,11 +4,11 @@ const StatusCircle = ({ status }) => {
     const determineColor = () => {
         switch (status) {
             case 3:
-                return "red";
+                return "#EB3C27";
             case 2:
-                return "green";
+                return "#00C756";
             case 1:
-                return "blue";
+                return "#0063b2";
             default:
                 return "gray";
         }
@@ -18,11 +18,12 @@ const StatusCircle = ({ status }) => {
 
     return (
         <div
+        className={`card-status-color-${color}`}
             style={{
-                width: "20px",
-                height: "20px",
-                borderRadius: "50%",
-                backgroundColor: color,
+                width: "100%",
+                height: "10px",
+               /*  borderRadius: "50%", */
+               backgroundColor: color,
                 display: "inline-block",
             }}
         />

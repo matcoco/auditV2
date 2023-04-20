@@ -82,7 +82,7 @@ const NewAuditModal = () => {
    
     return (
         <>
-            <Button disabled={!isDataValid(hardwareData)} variant="primary" onClick={handleShow}>Nouvel audit</Button>
+            <Button disabled={!isDataValid(hardwareData)} variant="primary" onClick={handleShow}>AUDIT</Button>
 
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>

@@ -10,13 +10,15 @@ import { toast } from 'react-toastify';
 import Barcode from '../Barcode';
 import { useNavigate } from 'react-router-dom';
 import ProgressBarComponent from "../ProgressBarComponent";
-import StatusCircle from "../StatusCircle";
+import StatusCards from "../StatusCard";
 import ExportDataButton from "../ExportDataButton";
 import SaveButton from "../SaveButton";
 import RestoreDataButton from "../RestaureDataButton";
 import DataCounter from "../DataCounter";
 import ResetDataButton from "../ResetDataButton";
 import PieChart from "../PieChart";
+import { MdEdit, MdDelete } from 'react-icons/md';
+
 
 
 const HomePage = () => {
@@ -59,10 +61,10 @@ const HomePage = () => {
       .filter((data) => data.gbook.toLowerCase().includes(searchValue.toLowerCase()))
       .filter((data) => filterStatus === "all" || data.status === parseInt(filterStatus, 10))
       .map((data, index) => (
-        <Card key={index} style={{ width: "18rem", marginBottom: "1rem" }}>
+        <Card key={index} className="card" style={{ width: "18rem", marginBottom: "1rem" }} >
+          <StatusCards status={data.status} />
           <Card.Body>
             <Card.Title>
-              <StatusCircle status={data.status} />
               <Barcode
                 value={data.gbook.toString()}
                 options={{
@@ -83,26 +85,34 @@ const HomePage = () => {
               Catégorie : {data.category}
               <br />
             </Card.Text>
-            <div>
+            <div className="progress-container">
               <ProgressBarComponent data={data} />
             </div>
-            <Button
-              variant="success"
-              className="ml-2"
-              onClick={() => handleAuditButtonClick(data)}
-            >
-              Auditer
-            </Button>
-            <Button variant="primary" onClick={() => handleEdit(data)}>
-              Modifier
-            </Button>
-            <Button
-              variant="danger"
-              className="ml-2"
-              onClick={() => handleDelete(data.gbook)}
-            >
-              Supprimer
-            </Button>
+            <div className="btn-card">
+              <div className="btn-auditer">
+                <Button
+                  variant="outline-primary"
+                  className="ml-2"
+                  onClick={() => handleAuditButtonClick(data)}
+                >
+                  Auditer
+                </Button>
+              </div>
+              <div className="btn-modification">
+                <Button variant="outline-primary" onClick={() => handleEdit(data)}>
+                  <MdEdit />
+                </Button>
+                <Button
+                  variant="outline-danger"
+                  className="ml-2 ml-2"
+                  onClick={() => handleDelete(data.gbook)}
+                >
+                  <MdDelete />
+                </Button>
+              </div>
+
+            </div>
+
           </Card.Body>
         </Card>
       ));
@@ -112,12 +122,17 @@ const HomePage = () => {
 
   return (
     <div>
-      <div>
-        <NewAuditModal />
+      <div className="d-flex">
+        <div className="mr-4">
+          <NewAuditModal />
+        </div>
+        <div className="ml-5">
+          <Button variant="primary" onClick={handleMenuToggle}>
+            Plus d'options
+          </Button>
+        </div>
       </div>
-      <Button variant="primary" onClick={handleMenuToggle}>
-        Plus d'options
-      </Button>
+
       <Offcanvas show={showMenu} onHide={handleMenuToggle} placement="end">
         <Offcanvas.Header closeButton>
           <Offcanvas.Title>Options</Offcanvas.Title>
@@ -139,23 +154,27 @@ const HomePage = () => {
       <div>
         {hardwareData.datas.length > 0 ? <PieChart /> : ""}
       </div>
-      <FormControl
-        type="text"
-        placeholder="Recherche par Gbook"
-        value={searchValue}
-        onChange={handleSearchChange}
-        style={{ marginBottom: "1rem" }}
-      />
-      <Form.Select
-        value={filterStatus}
-        onChange={handleFilterChange}
-        style={{ marginBottom: "1rem", width: "200px" }}
-      >
-        <option value="all">Tous les audits</option>
-        <option value="1">Statut 1</option>
-        <option value="2">Statut 2</option>
-        <option value="3">Statut 3</option>
-      </Form.Select>
+      <div className="d-flex">
+        <Form.Select
+          value={filterStatus}
+          onChange={handleFilterChange}
+          style={{ marginBottom: "1rem", width: "200px" }}
+        >
+          <option value="all">Tous les audits</option>
+          <option value="1">Statut 1</option>
+          <option value="2">Statut 2</option>
+          <option value="3">Statut 3</option>
+        </Form.Select>
+        <FormControl
+          type="text"
+          placeholder="Recherche par Gbook"
+          value={searchValue}
+          onChange={handleSearchChange}
+          className="search-gbook"
+        />
+      </div>
+
+
       {showEditModal && (
         <EditAuditModal
           show={showEditModal}
@@ -168,7 +187,7 @@ const HomePage = () => {
           ?
           <div className="pic-no-data">
             <img src={'https://t4.ftcdn.net/jpg/04/75/01/23/360_F_475012363_aNqXx8CrsoTfJP5KCf1rERd6G50K0hXw.jpg'} alt='no data' />
-          </div> : renderCards()}
+          </div> : <div className="d-flex cards-container">{renderCards()}</div>}
       </div>
     </div>
   );

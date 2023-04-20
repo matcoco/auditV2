@@ -178,6 +178,16 @@ export const hardwareSlice = createSlice({
         },
         addElementsToForm: (state, action) => {
             const { name, elements } = action.payload;
+
+            let index = 0
+            if (state.hardwareData[0].datas?.length > 0) {
+                for (let data of state.hardwareData[0].datas) {
+                    if (data.category === name) {
+                        state.hardwareData[0].datas[index].progress = calculatePercentage(data?.audit, elements)
+                    }
+                    index++
+                }
+            }
             state.hardwareData[0].forms[name] = elements;
         },
         updateSelectedData: (state, action) => {
@@ -194,7 +204,7 @@ export const hardwareSlice = createSlice({
         updateImportBDD: (state, action) => {
             state.hardwareData[0].bdd = action.payload
         },
-        resetDatas:(state,) => {
+        resetDatas: (state,) => {
             state.hardwareData[0].datas = []
         }
     }
