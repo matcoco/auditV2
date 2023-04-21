@@ -123,10 +123,10 @@ const HomePage = () => {
   return (
     <div>
       <div className="d-flex">
-        <div className="mr-4">
+        <div className="btn-audit">
           <NewAuditModal />
         </div>
-        <div className="ml-5">
+        <div className="btn-option">
           <Button variant="primary" onClick={handleMenuToggle}>
             Plus d'options
           </Button>
