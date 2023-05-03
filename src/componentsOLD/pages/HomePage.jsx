@@ -138,11 +138,11 @@ const HomePage = () => {
           <Offcanvas.Title>Options</Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body>
-          <div className="main-btn-lateral-options">
-            <div className="btn-lateral-options"><ExportDataButton /></div>
-            <div className="btn-lateral-options"><SaveButton isDisable={true} /></div>
-            <div className="btn-lateral-options"><RestoreDataButton /></div>
-            <div className="btn-lateral-options"><ResetDataButton /></div>
+          <div>
+            <ExportDataButton />
+            <SaveButton isDisable={true} />
+            <RestoreDataButton />
+            <ResetDataButton />
           </div>
         </Offcanvas.Body>
       </Offcanvas>
@@ -160,10 +160,10 @@ const HomePage = () => {
           onChange={handleFilterChange}
           style={{ marginBottom: "1rem", width: "200px" }}
         >
-          <option value="all">TOUS</option>
-          <option value="1">EN COURS</option>
-          <option value="2">TERMINE CONFORME</option>
-          <option value="3">TERMINE NON CONFORME</option>
+          <option value="all">Tous les audits</option>
+          <option value="1">Statut 1</option>
+          <option value="2">Statut 2</option>
+          <option value="3">Statut 3</option>
         </Form.Select>
         <FormControl
           type="text"
@@ -185,15 +185,9 @@ const HomePage = () => {
       <div>
         {hardwareData.datas.length === 0
           ?
-          <div className="container-noDataPic">
-            <div>
-              <img className="picNoData" src={'https://t4.ftcdn.net/jpg/04/75/01/23/360_F_475012363_aNqXx8CrsoTfJP5KCf1rERd6G50K0hXw.jpg'} alt='no data' />
-            </div>
-          </div>
-          :
-          <div className="d-flex cards-container">
-            {renderCards()}
-          </div>}
+          <div className="pic-no-data">
+            <img src={'https://t4.ftcdn.net/jpg/04/75/01/23/360_F_475012363_aNqXx8CrsoTfJP5KCf1rERd6G50K0hXw.jpg'} alt='no data' />
+          </div> : <div className="d-flex cards-container">{renderCards()}</div>}
       </div>
     </div>
   );

@@ -75,66 +75,14 @@ export const findIndexDatas = (datas, property, value) => {
 }
 
 
-
 export const calculatePercentage = (audit, auditOrigin) => {
-    const auditOriginObj = auditOrigin.reduce((acc, curr) => {
-        acc[curr.name] = curr;
-        return acc;
-    }, {});
+    const totalElements = Object.keys(auditOrigin).length;
+    const filledElements = Object.values(audit).filter((value) => value !== '' && value !== null).length;
 
-    const totalElements = Object.values(auditOriginObj).filter((value) => {
-        return value.optionalField === "no";
-    }).length;
-
-    let filledElements = audit !== undefined
-        ? Object.entries(audit).filter(([key, value]) => {
-            if (auditOriginObj.hasOwnProperty(key)) {
-                if (auditOriginObj[key].optionalField === "no") {
-                    return value !== '' && value !== null && (typeof value === 'undefined' || value.length !== 0);
-                }
-            }
-            return false;
-        }).length
-        : 0;
-
-        console.log(filledElements)
-        console.log(totalElements)
-       let resultat = (filledElements / totalElements) * 100
-    return isNaN(resultat) ? 0 : resultat;
+    return (filledElements / totalElements) * 100;
 };
 
 
-export const updateAuditStatus = (obj, formCurrentValues, formValues) => {
-    let status = 1;
-    if (formCurrentValues && Object.values(formCurrentValues).length > 0) {
-        const progressPercentage = calculatePercentage(obj.audit, formValues)
-        if (progressPercentage === 100) {
-            if (Object.values(formCurrentValues).some((value) => value === "NOK")) {
-                status = 3;
-            } else {
-                status = 2;
-            }
-        } else {
-            status = 1;
-        }
-    }
-    return status ?? 1;
-};
-
-
-
-export const deleteElementToDatasAudit = (audit, array) => {
-    let newObj = {}
-    for (let data of array) {
-        if (audit?.hasOwnProperty(data?.name)) {
-            console.log(data?.name)
-            newObj[data?.name] = audit[data?.name]
-        }
-
-    }
-    console.log(newObj)
-    return newObj
-}
 
 
 
@@ -180,7 +128,6 @@ export const hardwareSlice = createSlice({
             );
         },
         addAuditor: (state, action) => {
-            console.log(state)
             state.hardwareData[0].auditeur.push(action.payload);
         },
         updateAuditor: (state, action) => {
@@ -204,39 +151,8 @@ export const hardwareSlice = createSlice({
             state.hardwareData[0].settings.fieldsForms.push(action.payload);
         },
         updateFieldForm: (state, action) => {
-            let lastData = action.payload.data
             state.hardwareData[0].settings.fieldsForms[action.payload.index] = action.payload.fieldData;
-
-            // Vérifier si state.hardwareData[0].form est défini avant d'itérer dessus
-            if (state.hardwareData[0].forms) {
-                // Itérer sur chaque clé (category) de l'objet form
-                Object.keys(state.hardwareData[0].forms).forEach(category => {
-
-                    let index = 0
-                    for (let item of state.hardwareData[0].forms[category]) {
-                        if (item.name === action.payload.data.name) {
-                            state.hardwareData[0].forms[category][index] = action.payload.fieldData;
-
-                            let index_data = 0
-                            for (let data of state.hardwareData[0].datas) {
-                                if (data.hasOwnProperty('audit')) {
-                                    if (data.audit.hasOwnProperty(`${lastData.name}`)) {
-                                        let obj = { ...data.audit }
-                                        obj[action.payload.fieldData.name] = data.audit[`${lastData.name}`]
-                                        delete data.audit[`${lastData.name}`]
-                                        state.hardwareData[0].datas[index_data].audit = obj
-                                    }
-                                }
-                                index_data++
-                            }
-                        }
-                        index++
-                    }
-                });
-            }
         },
-
-
         deleteFieldForm: (state, action) => {
             state.hardwareData[0].settings.fieldsForms.splice(action.payload, 1);
         },
@@ -252,31 +168,6 @@ export const hardwareSlice = createSlice({
             delete state.hardwareData[0].forms[action.payload.lastedName]
             state.hardwareData[0].forms = { ...state.hardwareData[0].forms, [action.payload.categoryName]: value };
 
-            let newdState = state.hardwareData[0]
-            let newDatas = state.hardwareData[0].datas
-            let newCheckbox = state.hardwareData[0].checkboxAudit
-
-            let index = 0
-            for (let data of newdState.datas) {
-                if (data.category === action.payload.lastedName) {
-                    newDatas[index].category = action.payload.categoryName
-                }
-                index++
-            }
-
-            index = 0
-            for (let item of newCheckbox) {
-                if (item.id === action.payload.lastedName) {
-                    newCheckbox[index].id = action.payload.categoryName
-                    newCheckbox[index].label = action.payload.categoryName
-                }
-                index++
-            }
-
-            newdState.data = newDatas
-            newdState.checkboxAudit = newCheckbox
-            state.hardwareData[0] = newdState
-
         },
         deleteCategory: (state, action) => {
             let forms = state.hardwareData[0].forms
@@ -287,17 +178,12 @@ export const hardwareSlice = createSlice({
         },
         addElementsToForm: (state, action) => {
             const { name, elements } = action.payload;
-            let obj = {
-                test: 0
-            }
+
             let index = 0
             if (state.hardwareData[0].datas?.length > 0) {
                 for (let data of state.hardwareData[0].datas) {
                     if (data.category === name) {
-                        let newAudit = deleteElementToDatasAudit(data.audit, elements)
-                        state.hardwareData[0].datas[index].audit = newAudit
-                        state.hardwareData[0].datas[index].progress = calculatePercentage(newAudit, elements)
-                        state.hardwareData[0].datas[index].status = updateAuditStatus(newAudit, obj , elements)
+                        state.hardwareData[0].datas[index].progress = calculatePercentage(data?.audit, elements)
                     }
                     index++
                 }

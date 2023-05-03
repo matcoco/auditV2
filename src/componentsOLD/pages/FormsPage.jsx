@@ -11,7 +11,6 @@ import {
   updateFieldsForms
 } from "../../store/hardwareSlice";
 import CSVImporter from "../CSVImporter";
-import { MdEdit, MdDelete } from 'react-icons/md';
 
 const FormsPage = () => {
   const [showModal, setShowModal] = useState(false);
@@ -61,21 +60,20 @@ const FormsPage = () => {
       }
       return item;
     });
-
+  
     dispatch(updateFieldsForms(updatedData));
   };
-
+  
 
   return (
     <Container>
-      <div style={{ maxHeight: "500px", width: "1000px", overflowY: "auto" }}>
+      <div style={{ maxHeight: "500px", overflowY: "auto" }}>
         <Table striped bordered hover>
           <thead>
             <tr>
               <th>Label</th>
               <th>Name</th>
               <th>Type</th>
-              <th>champs facultatif</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -84,28 +82,20 @@ const FormsPage = () => {
               <tr key={index}>
                 <td>{element.label}</td>
                 <td>{element.name}</td>
+                <td>{element.type === "text" ? "Champs de saisie" : "Menu déroulant"}</td>
                 <td>
-                  {element.type === "text"
-                    ? "Champs de saisie"
-                    : element.type === "select"
-                      ? "Menu déroulant"
-                      : "Cases à cocher"}
-                </td>
-                <td>
-                  {element.optionalField}
-                </td>
-                <td className='d-flex w100'>
                   <Button
-                    variant="outline-primary"
+                    className="mr-2"
+                    variant="primary"
                     onClick={() => handleEdit({ ...element, index })}
                   >
-                    <MdEdit />
-                  </Button>
+                    Modifier
+                  </Button>{" "}
                   <Button
-                    variant="outline-danger"
+                    variant="danger"
                     onClick={() => handleDelete(index)}
                   >
-                    <MdDelete />
+                    Supprimer
                   </Button>
                 </td>
               </tr>

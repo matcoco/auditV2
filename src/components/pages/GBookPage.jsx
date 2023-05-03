@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { selectHardwareData, updateSelectedData, calculatePercentage } from '../../store/hardwareSlice';
+import { selectHardwareData, updateSelectedData, calculatePercentage, updateAuditStatus, deleteElementToDatasAudit } from '../../store/hardwareSlice';
 import { toast } from 'react-toastify';
 import ProgressBarComponent from '../ProgressBarComponent';
-import { Button, Container, Row, Col } from 'react-bootstrap';
+import { Button, Container, Row, Col, Form } from 'react-bootstrap';
 import SaveButton from '../SaveButton';
 
 const GBookPage = () => {
@@ -21,7 +21,7 @@ const GBookPage = () => {
     navigate('/');
   };
 
- useEffect(() => {
+  useEffect(() => {
     setData(location?.state || {});
   }, [location]);
 
@@ -29,7 +29,7 @@ const GBookPage = () => {
     let fields = hardwareData?.forms[data.category];
     setFormValues(fields);
     setFormCurrentValues(data.datas?.audit || {});
-  }, [hardwareData, data]); 
+  }, [hardwareData, data]);
 
 
   const handleChange = (e) => {
@@ -47,23 +47,6 @@ const GBookPage = () => {
   };
 
 
-  const updateAuditStatus = (obj) => {
-    let status = 1;
-    if (formCurrentValues && Object.values(formCurrentValues).length > 0) {
-      const progressPercentage = calculatePercentage(obj.audit, formValues)
-      if (progressPercentage === 100) {
-        if (Object.values(formCurrentValues).some((value) => value === "NOK")) {
-          status = 3;
-        } else {
-          status = 2;
-        }
-      } else {
-        status = 1;
-      }
-    }
-    return status ?? 1;
-  };
-
   const findItemByBookNumber = (bookNumber) => {
     const bdd = hardwareData?.bdd;
     if (!bdd) return null;
@@ -75,12 +58,45 @@ const GBookPage = () => {
   const handleSaveChanges = () => {
     let obj = { ...data.datas };
     obj.audit = formCurrentValues;
+
     obj.progress = calculatePercentage(obj.audit, formValues)
-    obj.status = updateAuditStatus(obj)
+  
+    obj.status = updateAuditStatus(obj, formCurrentValues, formValues)
     obj.dateFinAudit = obj.progress === 100 ? new Date().toDateString() : ""
+    obj.audit = deleteElementToDatasAudit(obj.audit, formValues)
     setData((prevData) => ({ ...prevData, datas: obj }));
     dispatch(updateSelectedData({ obj }));
     toast.success("Modifications enregistrées avec succès !", { autoClose: 1000 });
+  };
+
+  const handleCheckboxChange = (e) => {
+    const { name, value, checked } = e.target;
+
+    if (value === 'OK' && checked) {
+      // Reset all other checkboxes if 'OK' is checked
+      setFormCurrentValues((prevValues) => ({ ...prevValues, [name]: ['OK'] }));
+    } else if (value === 'Dalle brisée' && checked) {
+      setFormCurrentValues((prevValues) => ({ ...prevValues, [name]: ['Dalle brisée'] }));
+    } else if (value === 'boitier rayé' && checked) {
+      setFormCurrentValues((prevValues) => ({ ...prevValues, [name]: ['boitier rayé'] }));
+    } else if (value === 'boitier fortement rayé' && checked) {
+      setFormCurrentValues((prevValues) => ({ ...prevValues, [name]: ['boitier fortement rayé'] }));
+    } else if (value === 'LCD HS (ok sur écran externe)' && checked) {
+      setFormCurrentValues((prevValues) => ({ ...prevValues, [name]: ['LCD HS (ok sur écran externe)'] }));
+    } else if (value === 'boitier fortement abimé (collant)' && checked) {
+      setFormCurrentValues((prevValues) => ({ ...prevValues, [name]: ['boitier fortement abimé (collant)'] }));
+    } else if (value === 'boitier neuf' && checked) {
+      setFormCurrentValues((prevValues) => ({ ...prevValues, [name]: ['boitier neuf'] }))
+    } else {
+      // Uncheck 'OK' when any other checkbox is checked
+      setFormCurrentValues((prevValues) => {
+        const otherOptions = prevValues[name]?.filter((option) => option !== 'OK' && option !== 'Bouton power HS' && option !== 'boitier fortement abimé (collant)'&& option !== 'Dalle brisée' && option !== 'boitier fortement rayé' && option !== 'boitier rayé' && option !== 'boitier neuf' && option !== 'LCD HS (ok sur écran externe)') || [];
+        const updatedOptions = checked
+          ? [...otherOptions, value]
+          : otherOptions.filter((option) => option !== value);
+        return { ...prevValues, [name]: updatedOptions };
+      });
+    }
   };
 
 
@@ -88,75 +104,106 @@ const GBookPage = () => {
     return (
       <div key={data.category}>
         {formValues && formValues?.map((element) => {
-            if (element.type === 'text') {
-              return (
-                <div key={element.name}>
+          if (element.type === 'text') {
+            return (
+              <div key={element.name}>
+                <label htmlFor={element.name}>{element.label}</label>
+                <input
+                  type="text"
+                  id={element.name}
+                  name={element.name}
+                  value={formCurrentValues[element.name] || ''}
+                  onChange={handleChange}
+                />
+              </div>
+            );
+          } else if (element.type === 'select') {
+            return (
+              <div key={element.name}>
+                <label htmlFor={element.name}>{element.label}</label>
+                <select
+                  id={element.name}
+                  name={element.name}
+                  value={formCurrentValues[element.name] || ''}
+                  onChange={handleChange}
+                  style={{
+                    backgroundColor: getSelectBackgroundColor(
+                      formCurrentValues[element?.name]
+                    ),
+                  }}
+                >
+                  {element?.options.map((option, index) => (
+                    <option key={index} value={option}>
+                      {option}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            );
+          } else if (element.type === 'checkbox') {
+            return (
+              <Row key={element.name} className="mb-2">
+                <Col>
                   <label htmlFor={element.name}>{element.label}</label>
-                  <input
-                    type="text"
-                    id={element.name}
-                    name={element.name}
-                    value={formCurrentValues[element.name] || ''}
-                    onChange={handleChange}
-                  />
-                </div>
-              );
-            } else if (element.type === 'select') {
-              return (
-                <div key={element.name}>
-                  <label htmlFor={element.name}>{element.label}</label>
-                  <select
-                    id={element.name}
-                    name={element.name}
-                    value={formCurrentValues[element.name] || ''}
-                    onChange={handleChange}
-                    style={{
-                      backgroundColor: getSelectBackgroundColor(
-                        formCurrentValues[element?.name]
-                      ),
-                    }}
-                  >
-                    {element?.options.map((option, index) => (
-                      <option key={index} value={option}>
-                        {option}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-              );
-            }
-            return null;
-          })}
+                </Col>
+                <Col>
+                  {element.options.map((option, index) => (
+                    <Form.Check
+                      key={index}
+                      type="checkbox"
+                      id={`${element.name}_${index}`}
+                      name={element.name}
+                      label={option}
+                      value={option}
+                      checked={formCurrentValues[element.name]?.includes(option) || false}
+                      onChange={handleCheckboxChange}
+                    />
+                  ))}
+                </Col>
+              </Row>
+            );
+          }
+          return null;
+        })}
       </div>
     );
   };
 
-
   return (
     <div>
-      <h2>Éléments de formulaire</h2>
-      <Button variant="primary" onClick={handleGoToHomePage}>
-        Retour à la page d'accueil
-      </Button>
-      <Button variant="success" onClick={() => handleSaveChanges()}>
-        Enregistrer les modifications
-      </Button>
-      <SaveButton isDisable={false} />
-      <ProgressBarComponent data={data?.datas} />
+      <h2 className='title-gbookPage'>Éléments de formulaire</h2>
+      <div className='d-flex container-btn-gbookPage'>
+        <div className='btn-back-page'>
+
+          <Button variant="primary" onClick={handleGoToHomePage}>
+            Retour à la page d'accueil
+          </Button>
+        </div>
+        <div>
+          <Button variant="success" onClick={() => handleSaveChanges()}>
+            Enregistrer les modifications
+          </Button>
+          <SaveButton isDisable={false} />
+        </div>
+      </div>
+      <div className='container-progress'>
+        <ProgressBarComponent data={data?.datas} />
+      </div>
+
       <Container>
         <Row>
           <Col>{renderFormElements()}</Col>
           <Col>
-            <div>Commentaires</div>
+            <div><h2>Commentaires</h2></div>
             {selectedItem && (
               <div>
-                <div>Book Number: {selectedItem['Book Number']}</div>
-                <div>Description: {selectedItem['Description']}</div>
-                <div>Serial Number: {selectedItem['Serial Number']}</div>
-                <div>StockType: {selectedItem['Stock Type']}</div>
-                <div>Config Summary: {selectedItem['Config Summary']}</div>
-                <div>Condition: {selectedItem['Condition']}</div>
-                <div>Combined Comment: {selectedItem['Combined Comment']}</div>
+                <div><b>Book Number:</b> {selectedItem['Book Number']}</div>
+                <div><b>Description:</b> {selectedItem['Description']}</div>
+                <div><b>Serial Number:</b> {selectedItem['Serial Number']}</div>
+                <div><b>StockType:</b> {selectedItem['Stock Type']}</div>
+                <div><b>Config Summary:</b> {selectedItem['Config Summary']}</div>
+                <div><b>Condition:</b> {selectedItem['Condition']}</div>
+                <div><b>Combined Comment:</b> {selectedItem['Combined Comment']}</div>
               </div>
             )}
           </Col>
@@ -167,7 +214,3 @@ const GBookPage = () => {
 };
 
 export default GBookPage;
-
-
-
-

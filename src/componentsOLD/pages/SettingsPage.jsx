@@ -10,9 +10,6 @@ import FormsPage from "./FormsPage";
 import ImportConfig from "./ImportConfig";
 import ImportBDD from "./ImportBDD";
 
-
-
-
 const SettingsPage = () => {
   const [activeComponent, setActiveComponent] = useState(null);
 
@@ -42,7 +39,7 @@ const SettingsPage = () => {
               Gestionnaire des formulaires et catégorie
             </ListGroup.Item>
             <ListGroup.Item onClick={() => handleMenuItemClick("ImportBDD")}>Importation BDD</ListGroup.Item>
-            <ListGroup.Item onClick={() => handleMenuItemClick("ImportConfiguration")}>Importation / Exportation de la configuration</ListGroup.Item>
+            <ListGroup.Item onClick={() => handleMenuItemClick("ImportConfiguration")}>Importation de la configuration</ListGroup.Item>
           </ListGroup>
         </Col>
         <Col md={9}>
@@ -55,18 +52,15 @@ const SettingsPage = () => {
             {activeComponent === "ImportBDD" && <ImportBDD />}
             {/* Ajoutez ici d'autres conditions pour les autres liens du menu */}
           </Col>
-
-            <Routes>
-              <Route path="auditeurs" element={<ManageAuditors />} />
-              <Route path="demandeurs" element={<ManageRequesters />} />
-              <Route path="champsFormulaire" element={<FormsPage />} />
-              <Route path="categoriesFormulaire" element={<ManageCategoriesForms />} />
-              <Route path="ImportConfiguration" element={<ImportConfig />} />
-              <Route path="ImportBDD" element={<ImportBDD />} />
-              {/* ... */}
-            </Routes>
-  
-
+          <Routes>
+            <Route path="auditeurs" element={<ManageAuditors />} />
+            <Route path="demandeurs" element={<ManageRequesters />} />
+            <Route path="champsFormulaire" element={<FormsPage />} />
+            <Route path="categoriesFormulaire" element={<ManageCategoriesForms/>} />
+            <Route path="ImportConfiguration" element={<ImportConfig />} />
+            <Route path="ImportBDD" element={<ImportBDD />} />
+            {/* ... */}
+          </Routes>
         </Col>
       </Row>
     </Container>
