@@ -69,6 +69,7 @@ const FormsPage = () => {
   return (
     <Container>
       <div style={{ maxHeight: "500px", width: "1000px", overflowY: "auto" }}>
+        <h2 className="mb-4">Gestionnaire des champs de formulaire</h2>
         <Table striped bordered hover>
           <thead>
             <tr>
@@ -92,7 +93,7 @@ const FormsPage = () => {
                       : "Cases à cocher"}
                 </td>
                 <td>
-                  {element.optionalField}
+                  {element.optionalField === "yes" ? "facultatif" : "obligatoire"}
                 </td>
                 <td className='d-flex w100'>
                   <Button
@@ -122,11 +123,13 @@ const FormsPage = () => {
         isEdit={isEdit}
         isAdd={isAdd}
       />
-      <Button variant="success" className="mb-4" onClick={handleAdd}>
+      <Button variant="success" className="mt-3 mb-4" onClick={handleAdd}>
         Ajouter
       </Button>
+      <div>
+        <CSVImporter onImport={handleImport} />
+      </div>
 
-      <CSVImporter onImport={handleImport} />
     </Container>
   );
 };

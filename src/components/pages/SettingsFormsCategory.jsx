@@ -64,7 +64,7 @@ const SettingsFormsCategory = ({ show, name }) => {
         <div style={{ marginTop: '50px' }}>
             <ToastContainer />
             <h2>Champs de formulaire disponible</h2>
-            <div style={{ display: 'flex', flexDirection: 'column', height: '200px', overflowY: 'scroll' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', height: '400px', overflowY: 'scroll' }}>
                 <Table striped bordered hover>
                     <thead>
                         <tr>
@@ -91,7 +91,7 @@ const SettingsFormsCategory = ({ show, name }) => {
 
             <div style={{ marginTop: "50px" }}>
                 <h2>Formulaire {name}</h2>
-                <div style={{ display: 'flex', flexDirection: 'column', height: '300px', overflowY: 'scroll' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', height: '400px', overflowY: 'scroll' }}>
                     <Table striped bordered hover>
                         <thead>
                             <tr>

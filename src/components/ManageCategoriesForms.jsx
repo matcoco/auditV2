@@ -62,7 +62,8 @@ const ManageCategoriesForms = () => {
     };
 
     return (
-        <>
+        <div className='mb-5'>
+            <h2 className="mb-4">Gestionnaire des formulaires et catégorie</h2>
             <Table striped bordered hover>
                 <thead>
                     <tr>
@@ -114,14 +115,14 @@ const ManageCategoriesForms = () => {
 
             <div>
                 {
-                showSettingsCategory 
-                && 
-                <SettingsFormsCategory 
-                show={setShowSettingsCategory}
-                name={currentSelectName}
-                />}
+                    showSettingsCategory
+                    &&
+                    <SettingsFormsCategory
+                        show={setShowSettingsCategory}
+                        name={currentSelectName}
+                    />}
             </div>
-        </>
+        </div>
     );
 };
 

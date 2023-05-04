@@ -60,7 +60,7 @@ const GBookPage = () => {
     obj.audit = formCurrentValues;
 
     obj.progress = calculatePercentage(obj.audit, formValues)
-  
+
     obj.status = updateAuditStatus(obj, formCurrentValues, formValues)
     obj.dateFinAudit = obj.progress === 100 ? new Date().toDateString() : ""
     obj.audit = deleteElementToDatasAudit(obj.audit, formValues)
@@ -69,109 +69,104 @@ const GBookPage = () => {
     toast.success("Modifications enregistrées avec succès !", { autoClose: 1000 });
   };
 
+
   const handleCheckboxChange = (e) => {
     const { name, value, checked } = e.target;
 
-    if (value === 'OK' && checked) {
-      // Reset all other checkboxes if 'OK' is checked
-      setFormCurrentValues((prevValues) => ({ ...prevValues, [name]: ['OK'] }));
-    } else if (value === 'Dalle brisée' && checked) {
-      setFormCurrentValues((prevValues) => ({ ...prevValues, [name]: ['Dalle brisée'] }));
-    } else if (value === 'boitier rayé' && checked) {
-      setFormCurrentValues((prevValues) => ({ ...prevValues, [name]: ['boitier rayé'] }));
-    } else if (value === 'boitier fortement rayé' && checked) {
-      setFormCurrentValues((prevValues) => ({ ...prevValues, [name]: ['boitier fortement rayé'] }));
-    } else if (value === 'LCD HS (ok sur écran externe)' && checked) {
-      setFormCurrentValues((prevValues) => ({ ...prevValues, [name]: ['LCD HS (ok sur écran externe)'] }));
-    } else if (value === 'boitier fortement abimé (collant)' && checked) {
-      setFormCurrentValues((prevValues) => ({ ...prevValues, [name]: ['boitier fortement abimé (collant)'] }));
-    } else if (value === 'boitier neuf' && checked) {
-      setFormCurrentValues((prevValues) => ({ ...prevValues, [name]: ['boitier neuf'] }))
-    } else {
-      // Uncheck 'OK' when any other checkbox is checked
-      setFormCurrentValues((prevValues) => {
-        const otherOptions = prevValues[name]?.filter((option) => option !== 'OK' && option !== 'Bouton power HS' && option !== 'boitier fortement abimé (collant)'&& option !== 'Dalle brisée' && option !== 'boitier fortement rayé' && option !== 'boitier rayé' && option !== 'boitier neuf' && option !== 'LCD HS (ok sur écran externe)') || [];
-        const updatedOptions = checked
-          ? [...otherOptions, value]
-          : otherOptions.filter((option) => option !== value);
-        return { ...prevValues, [name]: updatedOptions };
-      });
-    }
+    setFormCurrentValues(prevState => {
+      // Si la case à cocher est déjà cochée, on la décoche en la supprimant du tableau.
+      if (checked) {
+        return { ...prevState, [name]: [...(prevState[name] || []), value] };
+      } else {
+        // Si la case à cocher n'est pas cochée, on l'ajoute au tableau.
+        return { ...prevState, [name]: prevState[name].filter(item => item !== value) };
+      }
+    });
   };
+
 
 
   const renderFormElements = () => {
     return (
       <div key={data.category}>
-        {formValues && formValues?.map((element) => {
-          if (element.type === 'text') {
-            return (
-              <div key={element.name}>
-                <label htmlFor={element.name}>{element.label}</label>
-                <input
-                  type="text"
-                  id={element.name}
-                  name={element.name}
-                  value={formCurrentValues[element.name] || ''}
-                  onChange={handleChange}
-                />
-              </div>
-            );
-          } else if (element.type === 'select') {
-            return (
-              <div key={element.name}>
-                <label htmlFor={element.name}>{element.label}</label>
-                <select
-                  id={element.name}
-                  name={element.name}
-                  value={formCurrentValues[element.name] || ''}
-                  onChange={handleChange}
-                  style={{
-                    backgroundColor: getSelectBackgroundColor(
-                      formCurrentValues[element?.name]
-                    ),
-                  }}
-                >
-                  {element?.options.map((option, index) => (
-                    <option key={index} value={option}>
-                      {option}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            );
-          } else if (element.type === 'checkbox') {
-            return (
-              <Row key={element.name} className="mb-2">
-                <Col>
-                  <label htmlFor={element.name}>{element.label}</label>
-                </Col>
-                <Col>
-                  {element.options.map((option, index) => (
-                    <Form.Check
-                      key={index}
-                      type="checkbox"
-                      id={`${element.name}_${index}`}
+        {formValues &&
+          formValues?.map((element) => {
+            if (element.type === 'text') {
+              return (
+                <Form.Group as={Row} key={element.name} controlId={element.name}>
+                  <Form.Label className='label-gbookPage' column sm={10}>
+                    {element.label}
+                  </Form.Label>
+                  <Col sm={5}>
+                    <Form.Control
+                      type="text"
                       name={element.name}
-                      label={option}
-                      value={option}
-                      checked={formCurrentValues[element.name]?.includes(option) || false}
-                      onChange={handleCheckboxChange}
+                      value={formCurrentValues[element.name] || ''}
+                      onChange={handleChange}
                     />
-                  ))}
-                </Col>
-              </Row>
-            );
-          }
-          return null;
-        })}
+                  </Col>
+                </Form.Group>
+              );
+            } else if (element.type === 'select') {
+              return (
+                <Form.Group className="select-gbookPage" as={Row} key={element.name} controlId={element.name}>
+                  <Form.Label className='label-gbookPage' column sm={5}>
+                    {element.label}
+                  </Form.Label>
+                  <Col sm={3}>
+                    <Form.Control
+                      as="select"
+                      name={element.name}
+                      value={formCurrentValues[element.name] || ''}
+                      onChange={handleChange}
+                      style={{
+                        backgroundColor: getSelectBackgroundColor(
+                          formCurrentValues[element?.name]
+                        ),
+                      }}
+                    >
+                      {element?.options.map((option, index) => (
+                        <option key={index} value={option}>
+                          {option}
+                        </option>
+                      ))}
+                    </Form.Control>
+                  </Col>
+                </Form.Group>
+              );
+            } else if (element.type === 'checkbox') {
+              return (
+                <Row key={element.name} className="mt-5 mb-5 frame-gbookPage">
+                  <Col sm={2}>
+                    <Form.Label className='label-gbookPage' htmlFor={element.name}>{element.label}</Form.Label>
+                  </Col>
+                  <Col sm={10}>
+                    {element.options.map((option, index) => (
+                      <Form.Check
+                        key={index}
+                        type="checkbox"
+                        id={`${element.name}_${index}`}
+                        name={element.name}
+                        label={option}
+                        value={option}
+                        checked={formCurrentValues[element.name]?.includes(option) || false}
+                        onChange={handleCheckboxChange}
+                      />
+                    ))}
+                  </Col>
+                </Row>
+              );
+            }
+            return null;
+          })}
       </div>
     );
   };
 
+
   return (
-    <div>
-      <h2 className='title-gbookPage'>Éléments de formulaire</h2>
+    <div className='mb-5'>
+      <h2 className='mb-5 title-gbookPage'>FORMULAIRE</h2>
       <div className='d-flex container-btn-gbookPage'>
         <div className='btn-back-page'>
 
@@ -192,9 +187,9 @@ const GBookPage = () => {
 
       <Container>
         <Row>
-          <Col>{renderFormElements()}</Col>
-          <Col>
-            <div><h2>Commentaires</h2></div>
+          <Col className='fields-part'>{renderFormElements()}</Col>
+          <Col className='h-100 comments commentsSticky'>
+            <div className='title-comments'><h2>Commentaires</h2></div>
             {selectedItem && (
               <div>
                 <div><b>Book Number:</b> {selectedItem['Book Number']}</div>

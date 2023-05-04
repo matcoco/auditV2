@@ -40,6 +40,7 @@ const ManageAuditors = () => {
 
   return (
     <>
+      <h2 className="mb-4">Gestionnaire des auditeurs</h2>
       <Table striped bordered hover>
         <thead>
           <tr>

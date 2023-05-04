@@ -14,7 +14,7 @@ import ImportBDD from "./ImportBDD";
 
 
 const SettingsPage = () => {
-  const [activeComponent, setActiveComponent] = useState(null);
+  const [activeComponent, setActiveComponent] = useState("auditeurs");
 
   const handleMenuItemClick = (component) => {
     setActiveComponent(component);
@@ -27,22 +27,22 @@ const SettingsPage = () => {
       <Row>
         <Col md={3}>
           <ListGroup>
-            <ListGroup.Item onClick={() => handleMenuItemClick("auditeurs")}>
+            <ListGroup.Item className="title-settings" onClick={() => handleMenuItemClick("auditeurs")}>
               Gestionnaire des auditeurs
             </ListGroup.Item>
 
-            <ListGroup.Item onClick={() => handleMenuItemClick("demandeurs")}>
+            <ListGroup.Item className="title-settings" onClick={() => handleMenuItemClick("demandeurs")}>
               Gestionnaire des demandeurs
             </ListGroup.Item>
 
-            <ListGroup.Item onClick={() => handleMenuItemClick("champsFormulaire")}>
+            <ListGroup.Item className="title-settings" onClick={() => handleMenuItemClick("champsFormulaire")}>
               Gestionnaire des champs de formulaire
             </ListGroup.Item>
-            <ListGroup.Item onClick={() => handleMenuItemClick("categoriesFormulaire")}>
+            <ListGroup.Item className="title-settings" onClick={() => handleMenuItemClick("categoriesFormulaire")}>
               Gestionnaire des formulaires et catégorie
             </ListGroup.Item>
-            <ListGroup.Item onClick={() => handleMenuItemClick("ImportBDD")}>Importation BDD</ListGroup.Item>
-            <ListGroup.Item onClick={() => handleMenuItemClick("ImportConfiguration")}>Importation / Exportation de la configuration</ListGroup.Item>
+            <ListGroup.Item className="title-settings" onClick={() => handleMenuItemClick("ImportBDD")}>Importation BDD</ListGroup.Item>
+            <ListGroup.Item className="title-settings" onClick={() => handleMenuItemClick("ImportConfiguration")}>Importation / Exportation de la configuration</ListGroup.Item>
           </ListGroup>
         </Col>
         <Col md={9}>
