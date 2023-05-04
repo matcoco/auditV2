@@ -4,12 +4,25 @@ import { selectHardwareData, addElementsToForm } from '../../store/hardwareSlice
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Table, Button } from 'react-bootstrap';
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+
 
 const SettingsFormsCategory = ({ show, name }) => {
     const hardwareData = useSelector(selectHardwareData);
     const [addedElements, setAddedElements] = useState([]);
     const [fieldsForms, setFieldsForms] = useState([])
     const dispatch = useDispatch();
+
+    const handleDragEnd = (result) => {
+        if (!result.destination) {
+            return;
+        }
+
+        const newElements = Array.from(addedElements);
+        const [reorderedElement] = newElements.splice(result.source.index, 1);
+        newElements.splice(result.destination.index, 0, reorderedElement);
+        setAddedElements(addedElements => newElements);
+    };
 
     const handleAddElement = (element) => {
         // Si ce n'est pas un doublon, ajoutez l'élément
@@ -31,7 +44,8 @@ const SettingsFormsCategory = ({ show, name }) => {
 
     const handleSubmit = () => {
         // Traitez les éléments ajoutés ici
-        dispatch(addElementsToForm({ name, elements: addedElements }));
+        console.log("array",addedElements)
+       dispatch(addElementsToForm({ name, elements: addedElements }));
         toast.success('Les éléments ont été enregistrés dans le formulaire !');
         show(false)
     };
@@ -45,11 +59,12 @@ const SettingsFormsCategory = ({ show, name }) => {
         setAddedElements(hardwareData?.forms[name])
     }, [hardwareData, name])
 
+
     return (
         <div style={{ marginTop: '50px' }}>
             <ToastContainer />
-            <h2>Formulaire {name}</h2>
-            <div style={{ display: 'flex', flexDirection: 'column', height: '200px', overflowY: 'scroll' }}>
+            <h2>Champs de formulaire disponible</h2>
+            <div style={{ display: 'flex', flexDirection: 'column', height: '400px', overflowY: 'scroll' }}>
                 <Table striped bordered hover>
                     <thead>
                         <tr>
@@ -73,32 +88,48 @@ const SettingsFormsCategory = ({ show, name }) => {
                     </tbody>
                 </Table>
             </div>
-            <div style={{ display: 'flex', flexDirection: 'column', height: '300px', overflowY: 'scroll' }}>
-                <Table striped bordered hover>
-                    <thead>
-                        <tr>
-                            <th>Label</th>
-                            <th>Name</th>
-                            <th>Type</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {addedElements.map((element, index) => (
-                            <tr key={index}>
-                                <td>{element.label}</td>
-                                <td>{element.name}</td>
-                                <td>{element.type}</td>
-                                <td>
-                                    <Button variant="outline-danger" onClick={() => handleRemoveElement(index)}>Supprimer</Button>
-                                </td>
+
+            <div style={{ marginTop: "50px" }}>
+                <h2>Formulaire {name}</h2>
+                <div style={{ display: 'flex', flexDirection: 'column', height: '400px', overflowY: 'scroll' }}>
+                    <Table striped bordered hover>
+                        <thead>
+                            <tr>
+                                <th>Label</th>
+                                <th>Name</th>
+                                <th>Type</th>
+                                <th>Action</th>
                             </tr>
-                        ))}
-                    </tbody>
-                </Table>
+                        </thead>
+                        <DragDropContext onDragEnd={handleDragEnd}>
+                            <Droppable droppableId="droppable">
+                                {(provided) => (
+                                    <tbody {...provided.droppableProps} ref={provided.innerRef}>
+                                        {addedElements.map((element, index) => (
+                                            <Draggable key={element.name} draggableId={element.name} index={index}>
+                                                {(provided) => (
+                                                    <tr ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
+                                                        <td>{element.label}</td>
+                                                        <td>{element.name}</td>
+                                                        <td>{element.type}</td>
+                                                        <td>
+                                                            <Button variant="outline-danger" onClick={() => handleRemoveElement(index)}>Supprimer</Button>
+                                                        </td>
+                                                    </tr>
+                                                )}
+                                            </Draggable>
+                                        ))}
+                                        {provided.placeholder}
+                                    </tbody>
+                                )}
+                            </Droppable>
+                        </DragDropContext>
+                    </Table>
+                </div>
+                <Button variant="secondary" onClick={handleCancel}>Annuler</Button>{" "}
+                <Button variant="outline-primary" onClick={handleSubmit}>Valider le formulaire</Button>
             </div>
-            <Button variant="secondary" onClick={handleCancel}>Annuler</Button>{" "}
-            <Button variant="outline-primary" onClick={handleSubmit}>Valider le formulaire</Button>
+
         </div>
     );
 };

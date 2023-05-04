@@ -1,21 +1,35 @@
 {
-  "name": "audit-v2",
-  "version": "0.1.0",
+  "name": "apptest",
   "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
   "dependencies": {
     "@nivo/pie": "^0.80.0",
     "@reduxjs/toolkit": "^1.9.3",
+    "@tauri-apps/api": "^1.2.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "bootstrap": "^5.2.3",
+    "concurrently": "^8.0.1",
+    "cross-env": "^7.0.3",
     "date-fns": "^2.29.3",
+    "electron-is-dev": "^2.0.0",
     "jsbarcode": "^3.11.5",
     "moment": "^2.29.4",
     "papaparse": "^5.4.1",
     "react": "^18.2.0",
+    "react-beautiful-dnd": "^13.1.1",
     "react-bootstrap": "^2.7.2",
     "react-datepicker": "^4.11.0",
+    "react-dnd": "^16.0.1",
+    "react-dnd-html5-backend": "^16.0.1",
     "react-dom": "^18.2.0",
     "react-icons": "^4.8.0",
     "react-redux": "^8.0.5",
@@ -24,20 +38,18 @@
     "react-toastify": "^9.1.2",
     "redux": "^4.2.1",
     "uniqid": "^5.4.0",
+    "wait-on": "^7.0.1",
     "web-vitals": "^2.1.4",
     "xlsx": "^0.18.5"
   },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+  "devDependencies": {
+    "@tauri-apps/cli": "^1.2.3",
+    "@types/react": "^18.0.15",
+    "@types/react-dom": "^18.0.6",
+    "@vitejs/plugin-react": "^3.0.0",
+    "sass": "^1.62.0",
+    "sass-loader": "^13.2.2",
+    "vite": "^4.2.1"
   },
   "browserslist": {
     "production": [
@@ -50,10 +62,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "sass": "^1.62.0",
-    "sass-loader": "^13.2.2",
-    "webpack": "^5.80.0"
   }
 }

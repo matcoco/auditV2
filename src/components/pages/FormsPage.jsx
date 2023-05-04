@@ -11,6 +11,7 @@ import {
   updateFieldsForms
 } from "../../store/hardwareSlice";
 import CSVImporter from "../CSVImporter";
+import { MdEdit, MdDelete } from 'react-icons/md';
 
 const FormsPage = () => {
   const [showModal, setShowModal] = useState(false);
@@ -60,20 +61,22 @@ const FormsPage = () => {
       }
       return item;
     });
-  
+
     dispatch(updateFieldsForms(updatedData));
   };
-  
+
 
   return (
     <Container>
-      <div style={{ maxHeight: "500px", overflowY: "auto" }}>
+      <div style={{ maxHeight: "500px", width: "1000px", overflowY: "auto" }}>
+        <h2 className="mb-4">Gestionnaire des champs de formulaire</h2>
         <Table striped bordered hover>
           <thead>
             <tr>
               <th>Label</th>
               <th>Name</th>
               <th>Type</th>
+              <th>champs facultatif</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -82,20 +85,28 @@ const FormsPage = () => {
               <tr key={index}>
                 <td>{element.label}</td>
                 <td>{element.name}</td>
-                <td>{element.type === "text" ? "Champs de saisie" : "Menu déroulant"}</td>
                 <td>
+                  {element.type === "text"
+                    ? "Champs de saisie"
+                    : element.type === "select"
+                      ? "Menu déroulant"
+                      : "Cases à cocher"}
+                </td>
+                <td>
+                  {element.optionalField === "yes" ? "facultatif" : "obligatoire"}
+                </td>
+                <td className='d-flex w100'>
                   <Button
-                    className="mr-2"
-                    variant="primary"
+                    variant="outline-primary"
                     onClick={() => handleEdit({ ...element, index })}
                   >
-                    Modifier
-                  </Button>{" "}
+                    <MdEdit />
+                  </Button>
                   <Button
-                    variant="danger"
+                    variant="outline-danger"
                     onClick={() => handleDelete(index)}
                   >
-                    Supprimer
+                    <MdDelete />
                   </Button>
                 </td>
               </tr>
@@ -112,11 +123,13 @@ const FormsPage = () => {
         isEdit={isEdit}
         isAdd={isAdd}
       />
-      <Button variant="success" className="mb-4" onClick={handleAdd}>
+      <Button variant="success" className="mt-3 mb-4" onClick={handleAdd}>
         Ajouter
       </Button>
+      <div>
+        <CSVImporter onImport={handleImport} />
+      </div>
 
-      <CSVImporter onImport={handleImport} />
     </Container>
   );
 };

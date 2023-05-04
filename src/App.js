@@ -1,12 +1,12 @@
 import React from 'react';
 import './App.css';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import HomePage from "./components/pages/HomePage";
-import GBookPage from "./components/pages/GBookPage";
-import SettingsPage from "./components/pages/SettingsPage";
-import NavGlobal from "./components/NavGlobal";
-import BDDIndicator from './components/BDDIndicator';
-import { selectHardwareData } from "./store/hardwareSlice";
+import HomePage from "./components/pages/HomePage.jsx";
+import GBookPage from "./components/pages/GBookPage.jsx";
+import SettingsPage from "./components/pages/SettingsPage.jsx";
+import NavGlobal from "./components/NavGlobal.jsx";
+import BDDIndicator from './components/BDDIndicator.jsx';
+import { selectHardwareData } from "./store/hardwareSlice.js";
 import { useSelector } from 'react-redux';
 import './styles/_main.scss'
 import { Container } from 'react-bootstrap';

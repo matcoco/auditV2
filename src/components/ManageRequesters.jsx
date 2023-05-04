@@ -40,6 +40,7 @@ const ManageRequesters = () => {
 
   return (
     <>
+      <h2 className="mb-4">Gestionnaire des demandeurs</h2>
       <Table striped bordered hover>
         <thead>
           <tr>

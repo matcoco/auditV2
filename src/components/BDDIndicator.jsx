@@ -14,7 +14,7 @@ const BDDIndicator = ({ isBddImported }) => {
     };
 
     return (
-        <div>
+        <div className='bdd-indicator'>
             <span>Base de données :</span>
             <span style={indicatorStyle}></span>
             <div>

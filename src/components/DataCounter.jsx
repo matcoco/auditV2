@@ -10,7 +10,7 @@ const DataCounter = () => {
   };
 
   return (
-    <div>
+    <div className='dataCounter'>
       <h3>Nombre de produits audités: {countData()}</h3>
     </div>
   );

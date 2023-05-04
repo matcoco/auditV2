@@ -1,90 +1,3 @@
-/* import React from 'react';
-import { useSelector } from 'react-redux';
-import { Button } from 'react-bootstrap';
-import { selectHardwareData } from '../store/hardwareSlice';
-import * as XLSX from 'xlsx';
-import { formatDateToDDMMYYYY } from '../utils/dateConvert';
-
-const ExportDataButton = () => {
-    const hardwareData = useSelector(selectHardwareData);
-    const emptyColumns = Array.from({ length: 10 }, (_, i) => `EmptyColumn${i + 1}`).reduce((acc, key) => {
-        acc[key] = "";
-        return acc;
-      }, {});
-    const exportToExcel = () => {
-        // Première feuille de données
-        const dataToExport1 = hardwareData.datas.map((item) => ({
-            // Les données pour la première feuille
-            dateDemande: formatDateToDDMMYYYY(item.date),
-            demandeur: item.requester,
-            natureDemande: "Audit",
-            gbook: item.gbook,
-            auditeur: item.auditor,
-            ...emptyColumns, 
-            debutDeTraitement: formatDateToDDMMYYYY(item.dateDebutAudit),
-            finDeTraitement: formatDateToDDMMYYYY(item.dateFinAudit),
-            dureeDePriseEnCharge: item.dateFinAudit ? calculateDuration(item.dateDebutAudit, item.dateFinAudit) + 1 : "",
-            dureeDeTraitementDePriseEnCharge: calculateDuration(item.date, item.dateFinAudit),
-            statutDemande: getStatusFromProgress(item.progress),
-            commentaire: item?.audit?.commentServ
-        }));
-
-
-
-
-        // Deuxième feuille de données
-        const dataToExport2 = hardwareData.datas.map((item) => ({
-                // Les données pour la deuxième feuille
-                gbook: item.gbook,
-                debutDeTraitement: formatDateToDDMMYYYY(item.dateDebutAudit),
-                auditeur: item.auditor,
-                commentaire: item?.audit?.commentServ,
-                audit: item.audit
-                ? JSON.stringify(Object.entries(item.audit).reduce((accumulator, [key, value]) => {
-                    accumulator[key] = value;
-                    return accumulator;
-                }, {}) ): {}
-
-            }));
-
-        const ws1 = XLSX.utils.json_to_sheet(dataToExport1);
-        const ws2 = XLSX.utils.json_to_sheet(dataToExport2);
-        const wb = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(wb, ws1, 'planification service');
-        XLSX.utils.book_append_sheet(wb, ws2, 'rapport audit');
-        XLSX.writeFile(wb, 'exported_data.xlsx');
-    };
-
-    function getStatusFromProgress(progress) {
-        if (progress === 100) {
-            return "03 - TERMINE";
-        } else if (progress > 0 && progress < 100) {
-            return "02 - EN COURS";
-        } else {
-            return "01 - A TRAITER";
-        }
-    }
-
-    function calculateDuration(startDate, endDate) {
-        if (!startDate || !endDate) {
-            return null;
-        }
-        const start = new Date(startDate);
-        const end = new Date(endDate);
-        const duration = (end - start) / (1000 * 60 * 60 * 24); // Convertir la durée en jours
-        return Math.round(duration) + 1;
-    }
-
-    return (
-        <Button variant="primary" onClick={exportToExcel}>
-            Exporter les données
-        </Button>
-    );
-};
-
-export default ExportDataButton;
- */
-
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Button, Modal, Dropdown } from 'react-bootstrap';
@@ -139,8 +52,8 @@ const ExportDataButton = () => {
             ...emptyColumns,
             debutDeTraitement: formatDateToDDMMYYYY(item.dateDebutAudit),
             finDeTraitement: item.dateFinAudit ? formatDateToDDMMYYYY(item.dateFinAudit) : "",
-            dureeDePriseEnCharge: item.dateFinAudit ? calculateDuration(item.dateDebutAudit, item.dateFinAudit) + 1 : "",
-            dureeDeTraitementDePriseEnCharge: calculateDuration(item.date, item.dateFinAudit),
+            dureeDePriseEnCharge: item.dateFinAudit ? calculateDuration(item.dateDebutAudit, item.dateFinAudit) : "",
+            dureeDeTraitementDePriseEnCharge: calculateDuration(item.date, item.dateFinAudit) + 1,
             statutDemande: getStatusFromProgress(item.progress),
             commentaire: item?.audit?.commentServ
         }));
@@ -187,8 +100,9 @@ const ExportDataButton = () => {
         }
         const start = new Date(startDate);
         const end = new Date(endDate);
-        const duration = (end - start) / (1000 * 60 * 60 * 24); // Convertir la durée en jours
-        return Math.round(duration);
+        const duration = (end - start ) / (1000 * 60 * 60 * 24); // Convertir la durée en jours
+        console.log(Math.abs(duration))
+        return Math.round(Math.abs((duration)));
     }
   
     return (
