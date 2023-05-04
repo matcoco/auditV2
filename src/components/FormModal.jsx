@@ -74,7 +74,6 @@ const FormModal = ({ show, onHide, data, isEdit, isAdd }) => {
     }
 
     if (isEdit && isUniqueName) {
-      console.log(data)
       dispatch(updateFieldForm({ fieldData, index: findIndexDatas(hardwareData.settings.fieldsForms, "name", data.name), data }));
       toast.success('Champs de formulaire modifié !');
       onHide();

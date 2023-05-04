@@ -42,8 +42,6 @@ const EditAuditModal = ({ show, onHide, data }) => {
             index: findIndexDatas(hardwareData.datas, data.gbook, data.gbook)
         };
 
-        console.log(updatedData)
-
 
         if (isUnique(gbook, hardwareData.datas, updatedData.lastedGbook, "gbook")) {
             dispatch(updateAudit(updatedData));

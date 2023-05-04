@@ -16,9 +16,6 @@ const SaveButton = ({ isDisable}) => {
   }, []);
 
   const saveToLocalStorage = () => {
-
-    console.log(hardwareData.datas)
-    localStorage.setItem('datas', JSON.stringify(hardwareData));
     try {
       localStorage.setItem('datas', JSON.stringify(hardwareData));
       toast.success("Sauvegarde automatique des données effectuée !")
