@@ -97,8 +97,6 @@ export const calculatePercentage = (audit, auditOrigin) => {
         }).length
         : 0;
 
-        console.log(filledElements)
-        console.log(totalElements)
        let resultat = (filledElements / totalElements) * 100
     return isNaN(resultat) ? 0 : resultat;
 };
@@ -127,12 +125,10 @@ export const deleteElementToDatasAudit = (audit, array) => {
     let newObj = {}
     for (let data of array) {
         if (audit?.hasOwnProperty(data?.name)) {
-            console.log(data?.name)
             newObj[data?.name] = audit[data?.name]
         }
 
     }
-    console.log(newObj)
     return newObj
 }
 
@@ -180,7 +176,6 @@ export const hardwareSlice = createSlice({
             );
         },
         addAuditor: (state, action) => {
-            console.log(state)
             state.hardwareData[0].auditeur.push(action.payload);
         },
         updateAuditor: (state, action) => {

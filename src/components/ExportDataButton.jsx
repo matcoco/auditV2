@@ -101,7 +101,6 @@ const ExportDataButton = () => {
         const start = new Date(startDate);
         const end = new Date(endDate);
         const duration = (end - start ) / (1000 * 60 * 60 * 24); // Convertir la durée en jours
-        console.log(Math.abs(duration))
         return Math.round(Math.abs((duration)));
     }
   

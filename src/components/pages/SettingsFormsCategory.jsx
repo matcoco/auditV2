@@ -44,7 +44,6 @@ const SettingsFormsCategory = ({ show, name }) => {
 
     const handleSubmit = () => {
         // Traitez les éléments ajoutés ici
-        console.log("array",addedElements)
        dispatch(addElementsToForm({ name, elements: addedElements }));
         toast.success('Les éléments ont été enregistrés dans le formulaire !');
         show(false)
