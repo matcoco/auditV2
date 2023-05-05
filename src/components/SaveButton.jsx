@@ -17,7 +17,7 @@ const SaveButton = ({ isDisable}) => {
 
   const saveToLocalStorage = () => {
     try {
-      window.localStorage.setItem('datas', JSON.stringify(hardwareData));
+      localStorage.setItem('datas', JSON.stringify(hardwareData));
       toast.success("Sauvegarde automatique des données effectuée !")
     } catch (error) {
         toast.error('Failed to save data to local storage:', error);
@@ -31,13 +31,11 @@ const SaveButton = ({ isDisable}) => {
     return interval;
   };
 
-  const handleSaveClick = () => {
-    saveToLocalStorage();
-  };
+
 
   return (
     <div>
-     { isDisable && <Button onClick={handleSaveClick}>Sauvegarder</Button>}
+     { isDisable && <Button onClick={saveToLocalStorage}>Sauvegarder</Button>}
     </div>
   );
 };
