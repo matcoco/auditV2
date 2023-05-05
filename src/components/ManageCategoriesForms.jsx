@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Table, Button, Modal } from 'react-bootstrap';
 import { selectHardwareData, addCategory, updateCategory, deleteCategory } from '../store/hardwareSlice';
 import SettingsFormsCategory from './pages/SettingsFormsCategory'
+import ButtonValidation from './ButtonValidation';
 
 const ManageCategoriesForms = () => {
     const dispatch = useDispatch();
@@ -77,7 +78,7 @@ const ManageCategoriesForms = () => {
                             <td>{name}</td>
                             <td>
                                 <Button variant="outline-primary" onClick={() => handleEdit(name)}>Modifier</Button>{" "}
-                                <Button variant="outline-danger" onClick={() => handleDelete(name)}>Supprimer</Button>{" "}
+                                <ButtonValidation  onDelete={() => handleDelete(name)} />{" "}
                                 <Button variant="secondary" onClick={() => handleEditForms(name)}>Paramétrer le formulaire</Button>
                             </td>
                         </tr>

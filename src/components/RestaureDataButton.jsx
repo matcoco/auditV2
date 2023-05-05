@@ -14,7 +14,7 @@ const RestoreDataButton = () => {
             dispatch(fetchDataSuccess(localStorageData));
             toast.success("Données restaurées.")
         } else {
-            toast.error("Aucunes données présente dans le navigateur.")
+            toast.error("Aucunes données présente dans le navigateur.", { closeOnClick: true, autoClose: 2000, })
         }
     };
 

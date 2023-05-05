@@ -55,7 +55,7 @@ const FormModal = ({ show, onHide, data, isEdit, isAdd }) => {
     // Vérifier si tous les champs sont remplis
     if (!label || !name || !type) {
       // Afficher une notification d'erreur
-      toast.error('Merci de remplir tous les champs!');
+      toast.error('Merci de remplir tous les champs!', { closeOnClick: true, autoClose: 2000, });
       return;
     }
 
@@ -85,7 +85,7 @@ const FormModal = ({ show, onHide, data, isEdit, isAdd }) => {
       // Fermer la modal
       onHide()
     } else {
-      toast.error('Champs déjà présent dans la liste');
+      toast.error('Champs déjà présent dans la liste', { closeOnClick: true, autoClose: 2000, });
     }
   }
 

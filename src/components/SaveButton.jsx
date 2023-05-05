@@ -18,9 +18,9 @@ const SaveButton = ({ isDisable}) => {
   const saveToLocalStorage = () => {
     try {
       localStorage.setItem('datas', JSON.stringify(hardwareData));
-      toast.success("Sauvegarde automatique des données effectuée !")
+      toast.success("Sauvegarde automatique des données effectuée !", { closeOnClick: true, autoClose: 2000, })
     } catch (error) {
-        toast.error('Failed to save data to local storage:', error);
+        toast.error('Failed to save data to local storage:', error, { closeOnClick: true, autoClose: 2000, });
     }
   };
 

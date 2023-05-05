@@ -5,6 +5,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Table, Button } from 'react-bootstrap';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import ButtonValidation from '../ButtonValidation';
 
 
 const SettingsFormsCategory = ({ show, name }) => {
@@ -29,10 +30,10 @@ const SettingsFormsCategory = ({ show, name }) => {
         const isDuplicate = addedElements.some((item) => item.name === element.name);
         if (!isDuplicate) {
             setAddedElements([...addedElements, element]);
-            toast.success('Élément ajouté à la liste !');
+            toast.success('Élément ajouté à la liste !', { closeOnClick: true, autoClose: 2000, });
         } else {
             // Affichez une alerte indiquant que l'élément est déjà dans la liste
-            toast.error('Cet élément a déjà été ajouté à la liste.');
+            toast.error('Cet élément a déjà été ajouté à la liste.', { closeOnClick: true, autoClose: 2000, });
         }
     };
 
@@ -44,8 +45,8 @@ const SettingsFormsCategory = ({ show, name }) => {
 
     const handleSubmit = () => {
         // Traitez les éléments ajoutés ici
-       dispatch(addElementsToForm({ name, elements: addedElements }));
-        toast.success('Les éléments ont été enregistrés dans le formulaire !');
+        dispatch(addElementsToForm({ name, elements: addedElements }));
+        toast.success('Les éléments ont été enregistrés dans le formulaire !', { closeOnClick: true, autoClose: 2000, });
         show(false)
     };
 
@@ -112,7 +113,7 @@ const SettingsFormsCategory = ({ show, name }) => {
                                                         <td>{element.name}</td>
                                                         <td>{element.type}</td>
                                                         <td>
-                                                            <Button variant="outline-danger" onClick={() => handleRemoveElement(index)}>Supprimer</Button>
+                                                            <ButtonValidation onDelete={() => handleRemoveElement(index)} />
                                                         </td>
                                                     </tr>
                                                 )}

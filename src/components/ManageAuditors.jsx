@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Table, Button, Modal, Form } from "react-bootstrap";
 import { selectHardwareData, addAuditor, updateAuditor, deleteAuditor } from "../store/hardwareSlice";
+import ButtonValidation from "./ButtonValidation";
 
 const ManageAuditors = () => {
   const hardwareData = useSelector(selectHardwareData);
@@ -56,9 +57,7 @@ const ManageAuditors = () => {
                 <Button variant="primary" onClick={() => handleEditAuditor(index)}>
                   Modifier
                 </Button>{" "}
-                <Button variant="danger" onClick={() => handleDeleteAuditor(index)}>
-                  Supprimer
-                </Button>
+                <ButtonValidation onDelete={() => handleDeleteAuditor(index)} />
               </td>
             </tr>
           ))}

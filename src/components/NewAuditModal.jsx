@@ -52,7 +52,7 @@ const NewAuditModal = () => {
         }
 
         if (!isGbookUnique(gbook)) {
-            toast.error("La valeur GBOOK doit être unique.");
+            toast.error("La valeur GBOOK doit être unique.", { closeOnClick: true, autoClose: 2000, });
             return;
         }
 

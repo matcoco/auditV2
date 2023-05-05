@@ -17,7 +17,8 @@ import RestoreDataButton from "../RestaureDataButton";
 import DataCounter from "../DataCounter";
 import ResetDataButton from "../ResetDataButton";
 import PieChart from "../PieChart";
-import { MdEdit, MdDelete } from 'react-icons/md';
+import { MdEdit } from 'react-icons/md';
+import ButtonValidation from "../ButtonValidation";
 
 
 
@@ -102,13 +103,14 @@ const HomePage = () => {
                 <Button variant="outline-primary" onClick={() => handleEdit(data)}>
                   <MdEdit />
                 </Button>
-                <Button
+{/*                 <Button
                   variant="outline-danger"
                   className="ml-2 ml-2"
                   onClick={() => handleDelete(data.gbook)}
                 >
                   <MdDelete />
-                </Button>
+                </Button> */}
+                <ButtonValidation onDelete={() => handleDelete(data.gbook)} />
               </div>
 
             </div>

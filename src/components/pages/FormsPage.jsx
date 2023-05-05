@@ -12,6 +12,7 @@ import {
 } from "../../store/hardwareSlice";
 import CSVImporter from "../CSVImporter";
 import { MdEdit, MdDelete } from 'react-icons/md';
+import ButtonValidation from '../ButtonValidation';
 
 const FormsPage = () => {
   const [showModal, setShowModal] = useState(false);
@@ -102,12 +103,7 @@ const FormsPage = () => {
                   >
                     <MdEdit />
                   </Button>
-                  <Button
-                    variant="outline-danger"
-                    onClick={() => handleDelete(index)}
-                  >
-                    <MdDelete />
-                  </Button>
+                   <ButtonValidation onDelete={() => handleDelete(index)} />
                 </td>
               </tr>
             ))}

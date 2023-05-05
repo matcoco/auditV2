@@ -17,6 +17,22 @@ const ExportDataButton = () => {
         setSelectedOption(option);
     };
 
+    function toUpperCaseInObject(obj) {
+        const newObj = {};
+
+        for (const key in obj) {
+            if (typeof obj[key] === "string") {
+                newObj[key] = obj[key].toUpperCase();
+            } else if (Array.isArray(obj[key]) && obj[key].every(item => typeof item === "string")) {
+                newObj[key] = obj[key].map(item => item.toUpperCase());
+            } else {
+                newObj[key] = obj[key];
+            }
+        }
+
+        return newObj;
+    }
+
     const handleExportClick = () => {
         // Filtrer les données en fonction de l'option sélectionnée
         const filteredData = hardwareData.datas.filter((item) => {
@@ -31,7 +47,8 @@ const ExportDataButton = () => {
             }
         });
 
-        // Appeler la fonction exportToExcel avec les données filtrées
+
+        //Appeler la fonction exportToExcel avec les données filtrées
         exportToExcel(filteredData);
         handleClose();
     };
@@ -41,6 +58,7 @@ const ExportDataButton = () => {
         return acc;
     }, {});
     const exportToExcel = (filteredData) => {
+
         // Première feuille de données
         const dataToExport1 = filteredData.map((item) => ({
             // Les données pour la première feuille
@@ -69,12 +87,13 @@ const ExportDataButton = () => {
             auditeur: item.auditor,
             commentaire: item?.audit?.commentServ,
             audit: item.audit
-                ? JSON.stringify(Object.entries(item.audit).reduce((accumulator, [key, value]) => {
+                ? JSON.stringify(Object.entries(toUpperCaseInObject(item.audit)).reduce((accumulator, [key, value]) => {
                     accumulator[key] = value;
                     return accumulator;
                 }, {})) : {}
 
         }));
+
 
         const ws1 = XLSX.utils.json_to_sheet(dataToExport1);
         const ws2 = XLSX.utils.json_to_sheet(dataToExport2);
@@ -100,10 +119,10 @@ const ExportDataButton = () => {
         }
         const start = new Date(startDate);
         const end = new Date(endDate);
-        const duration = (end - start ) / (1000 * 60 * 60 * 24); // Convertir la durée en jours
+        const duration = (end - start) / (1000 * 60 * 60 * 24); // Convertir la durée en jours
         return Math.round(Math.abs((duration)));
     }
-  
+
     return (
         <>
             <Button disabled={!Object.keys(hardwareData.datas).length > 0} variant="primary" onClick={handleShow}>

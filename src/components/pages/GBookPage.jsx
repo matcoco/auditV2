@@ -38,9 +38,9 @@ const GBookPage = () => {
   };
 
   const getSelectBackgroundColor = (value) => {
-    if (value === "OK") {
+ /*    if (value === "OK") {
       return "green";
-    } else if (value === "NOK") {
+    } else  */if (value === "NOK") {
       return "red";
     }
     return "transparent";
