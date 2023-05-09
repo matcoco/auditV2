@@ -53,6 +53,26 @@ const ExportDataButton = () => {
         handleClose();
     };
 
+    const allComments = (obj, comments) => {
+        let result = "";
+
+        for (let [key, value] of Object.entries(obj)) {
+            if (Array.isArray(value)) {
+                value = value.join(", ");
+            }
+            result += value + ", ";
+        }
+
+        // Enlève la dernière virgule et l'espace
+        result = result.slice(0, -2)
+
+        if(comments){
+            result += comment
+        }
+
+        return result
+    }
+
     const emptyColumns = Array.from({ length: 10 }, (_, i) => `EmptyColumn${i + 1}`).reduce((acc, key) => {
         acc[key] = "";
         return acc;
@@ -73,7 +93,7 @@ const ExportDataButton = () => {
             dureeDePriseEnCharge: item.dateFinAudit ? calculateDuration(item.dateDebutAudit, item.dateFinAudit) : "",
             dureeDeTraitementDePriseEnCharge: calculateDuration(item.date, item.dateFinAudit) + 1,
             statutDemande: getStatusFromProgress(item.progress),
-            commentaire: item?.audit?.commentServ
+            commentaire: allComments(item?.audit, item?.audit?.commentServ)
         }));
 
 
